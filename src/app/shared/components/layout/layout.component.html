@@ -1,0 +1,15 @@
+<div class="d-flex min-vh-100 bg-light">
+  <!-- Sidebar -->
+  <app-sidebar [isOpen]="isSidebarOpen"></app-sidebar>
+  
+  <!-- Main content area -->
+  <div class="main-content">
+    <!-- Header -->
+    <app-header (toggleSidebarEvent)="toggleSidebar()"></app-header>
+    
+    <!-- Dynamic content -->
+    <div class="content-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

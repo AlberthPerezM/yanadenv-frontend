@@ -1,0 +1,45 @@
+<div class="card border-primary mb-3">
+  <div class="card-header bg-primary text-white">
+    Apoderados
+  </div>
+  <div class="card-body">
+    <h5 class="card-title text-primary">Listado de Apoderados</h5>
+    <div class="my-2 text-left">
+        <button [routerLink]="['/apoderados/form']" class="btn btn-success">Crear Apoderado</button>
+    </div>
+    <table class="table table-responsive table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido Paterno</th>
+          <th scope="col">Apellido Materno</th>
+          <th scope="col">Sexo</th>
+          <th scope="col">Tipo Documento</th>
+          <th scope="col">Número Documento</th>
+          <th scope="col">Edad</th>
+          <th scope="col">Participante</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let apoderado of apoderados" class="align-middle">
+          <td>{{ apoderado.idApo }}</td>
+          <td>{{ apoderado.nombre }}</td>
+          <td>{{ apoderado.apellidoPaterno }}</td>
+          <td>{{ apoderado.apellidoMaterno }}</td>
+          <td>{{ apoderado.sexo }}</td>
+          <td>{{ apoderado.tipoDocumento }}</td>
+          <td>{{ apoderado.numeroDocumento }}</td>
+          <td>{{ apoderado.edad }}</td>
+          <td>{{ apoderado.participante?.nombre }}</td>
+
+          <td>
+            <button type="button" [routerLink]="['/apoderados/form', apoderado.idApo]" class="btn btn-primary">Editar</button>
+            <button type="button" (click)='delete(apoderado)' class="btn btn-danger btn-sm">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

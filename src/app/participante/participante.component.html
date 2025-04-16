@@ -1,0 +1,48 @@
+<div class="tabular-wrapper">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="main-title">Listado de Pacientes</h3>
+    <button [routerLink]="['/participantes/form']" class="btn btn-success">
+      <i class="fas fa-plus me-2"></i> Crear participante
+    </button>
+  </div>
+
+  <div class="table-responsive">
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Participante</th>
+          <th>Sexo</th>
+          <th>Tipo Doc.</th>
+          <th>N° Doc.</th>
+          <th>Edad</th>
+          <th>Gestante</th>
+          <th>Edad Gest.</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let participante of participantes">
+          <td>{{ participante.idPar }}</td>
+          <td>{{ getNombreCompleto(participante) }}</td>
+          <td>{{ participante.sexo }}</td>
+          <td>{{ participante.tipoDocumento }}</td>
+          <td>{{ participante.numeroDocumento }}</td>
+          <td>{{ participante.edad }}</td>
+          <td>{{ participante.gestante }}</td>
+          <td>{{ participante.edadGestacional }}</td>
+          <td>
+            <div class="d-flex justify-content-center gap-2 flex-wrap">
+              <button type="button" [routerLink]="['/participantes/form', participante.idPar]" class="btn btn-sm btn-primary">
+                <i class="fas fa-edit"></i> Editar
+              </button>
+              <button type="button" (click)="delete(participante)" class="btn btn-sm btn-danger">
+                <i class="fas fa-trash-alt"></i> Eliminar
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

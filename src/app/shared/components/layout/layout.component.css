@@ -1,0 +1,40 @@
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #ebe9e9;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  margin-left: 80px;
+  width: calc(100% - 80px);
+  min-height: 100vh;
+  transition: all 0.3s ease;
+}
+
+.content-wrapper {
+  flex-grow: 1;
+  padding: 1rem;
+}
+
+/* Ajuste cuando el sidebar se expande */
+.sidebar.active ~ .main-content {
+  margin-left: 220px;
+  width: calc(100% - 220px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  .sidebar.active ~ .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+}

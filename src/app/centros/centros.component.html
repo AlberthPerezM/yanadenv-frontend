@@ -1,0 +1,38 @@
+
+<div class="card border-primary mb-3">
+  <div class="card-header bg-primary text-white">
+    Clientes
+  </div>
+  <div class="card-body">
+    <h5 class="card-title text-primary">Listado de clientes</h5>
+    <div class="my-2 text-left">
+      <button [routerLink]="['/centros/form']" class="btn btn-success">Crear Cliente</button>
+    </div>
+    <table class="table table-responsive table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Latitud</th>
+          <th scope="col">Longitud</th>
+          <th scope="col">Nivel</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let centro of centros" class="align-middle">
+            <td>{{ centro.idCen }}</td>
+            <td>{{ centro.nombreCen }}</td>
+            <td>{{ centro.latitud }}</td>
+            <td>{{ centro.longitud }}</td>
+            <td>{{ centro.nivel.nombreNiv }}</td>
+            <td>
+              <button type="button" name="button" [routerLink]="['/centros/form', centro.idCen]" class="btn btn-primary">editar</button>
+            </td>
+            <td>
+              <button type="button" name="eliminar" (click)='delete(centro)' class="btn btn-danger btn-sm">eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+  </div>
+</div>

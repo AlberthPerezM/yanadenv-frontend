@@ -1,0 +1,79 @@
+<div class="card border-0 shadow-lg">
+  <div class="card-header bg-primary text-white fw-bold fs-5">
+    {{ titulo }}
+  </div>
+  <div class="card-body bg-light">
+    <form class="row g-3">
+      <!-- Nombre -->
+      <div class="col-md-6">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" [(ngModel)]="apoderado.nombre" name="nombre">
+      </div>
+
+      <!-- Apellido Paterno -->
+      <div class="col-md-6">
+        <label for="apellidoPaterno" class="form-label">Apellido Paterno</label>
+        <input type="text" class="form-control" [(ngModel)]="apoderado.apellidoPaterno" name="apellidoPaterno">
+      </div>
+
+      <!-- Apellido Materno -->
+      <div class="col-md-6">
+        <label for="apellidoMaterno" class="form-label">Apellido Materno</label>
+        <input type="text" class="form-control" [(ngModel)]="apoderado.apellidoMaterno" name="apellidoMaterno">
+      </div>
+
+      <!-- Sexo -->
+      <div class="col-md-6">
+        <label for="sexo" class="form-label">Sexo</label>
+        <select class="form-select" [(ngModel)]="apoderado.sexo" name="sexo">
+          <option value="M">Masculino</option>
+          <option value="F">Femenino</option>
+        </select>
+      </div>
+
+      <!-- Tipo de Documento -->
+      <div class="col-md-6">
+        <label for="tipoDocumento" class="form-label">Tipo de Documento</label>
+        <select class="form-select" [(ngModel)]="apoderado.tipoDocumento" name="tipoDocumento">
+          <option value="DNI">DNI</option>
+          <option value="Carnet de Extranjería">Carnet de Extranjería</option>
+        </select>
+      </div>
+
+      <!-- Número de Documento -->
+      <div class="col-md-6">
+        <label for="numeroDocumento" class="form-label">Número de Documento</label>
+        <input type="text" class="form-control" [(ngModel)]="apoderado.numeroDocumento" name="numeroDocumento">
+      </div>
+
+      <!-- Edad -->
+      <div class="col-md-6">
+        <label for="edad" class="form-label">Edad</label>
+        <input type="number" class="form-control" [(ngModel)]="apoderado.edad" name="edad">
+      </div>
+
+      <!-- Participante -->
+      <div class="col-md-6">
+        <label for="nivel" class="form-label">Participante</label>
+        <select [compareWith]="compararParticipante" class="form-select" [(ngModel)]="apoderado.participante" name="nivel" [disabled]="true">
+          <option [ngValue]="undefined">--- Seleccionar ---</option>
+          <option *ngFor="let participante of participantes" [ngValue]="participante">{{ participante.nombre }}</option>
+        </select>
+      </div>
+
+      <div class="col-12">
+        <p>ID AQUI DEBE RECIBIR EL PARAMETRO</p>
+        <div *ngIf="idParticipante">
+          <p>Participante relacionado: {{ idParticipante }}</p>
+        </div>
+      </div>
+
+      <!-- Botón Guardar -->
+      <div class="col-12 d-flex justify-content-end mt-4">
+        <button type="button" class="btn btn-success me-2" (click)="create()">
+          Guardar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

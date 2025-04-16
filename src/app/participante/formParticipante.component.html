@@ -1,0 +1,89 @@
+<a
+  *ngIf="participante.edad < 18"
+  [routerLink]="apoderadoExistenteId ? ['/apoderados/form', apoderadoExistenteId] : ['/apoderados/form']"
+  [queryParams]="{ idParticipante: participante.idPar }"
+  class="btn btn-warning my-3">
+  {{ apoderadoExistenteId ? 'Editar Apoderado' : 'Registrar Apoderado' }}
+</a>
+
+<div class="card border-0 shadow-lg">
+  <div class="card-header bg-primary text-white fw-bold fs-5">
+    {{ titulo }}
+  </div>
+  <div class="card-body bg-light">
+    <form class="row g-3">
+
+       <!-- ID (solo lectura, oculto) -->
+      <div class="col-md-6" style="display:none">
+        <label for="idPar" class="form-label">ID</label>
+        <input type="number" class="form-control" [(ngModel)]="participante.idPar" name="idPar" disabled>
+      </div>
+      
+      <div class="col-md-6">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" [(ngModel)]="participante.nombre" name="nombre">
+      </div>
+
+      <div class="col-md-6">
+        <label for="apellidoPaterno" class="form-label">Apellido Paterno</label>
+        <input type="text" class="form-control" [(ngModel)]="participante.apellidoPaterno" name="apellidoPaterno">
+      </div>
+
+      <div class="col-md-6">
+        <label for="apellidoMaterno" class="form-label">Apellido Materno</label>
+        <input type="text" class="form-control" [(ngModel)]="participante.apellidoMaterno" name="apellidoMaterno">
+      </div>
+
+      <div class="col-md-6">
+        <label for="sexo" class="form-label">Sexo</label>
+        <select class="form-select" [(ngModel)]="participante.sexo" name="sexo">
+          <option value="M">Masculino</option>
+          <option value="F">Femenino</option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label for="tipoDocumento" class="form-label">Tipo de Documento</label>
+        <select class="form-select" [(ngModel)]="participante.tipoDocumento" name="tipoDocumento">
+          <option value="DNI">DNI</option>
+          <option value="Carnet de Extranjería">Carnet de Extranjería</option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label for="numeroDocumento" class="form-label">Número de Documento</label>
+        <input type="text" class="form-control" [(ngModel)]="participante.numeroDocumento" name="numeroDocumento">
+      </div>
+
+      <div class="col-md-6">
+        <label for="edad" class="form-label">Edad</label>
+        <input type="number" class="form-control" [(ngModel)]="participante.edad" name="edad">
+      </div>
+
+      <!-- Solo mostrar si es mujer -->
+      <div class="col-md-6" *ngIf="participante.sexo === 'F'">
+        <label for="gestante" class="form-label">Gestante</label>
+        <select class="form-select" [(ngModel)]="participante.gestante" name="gestante">
+          <option value="Sí">Sí</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+
+      <!-- Solo mostrar si es gestante -->
+      <div class="col-md-6" *ngIf="participante.sexo === 'F' && participante.gestante === 'Sí'">
+        <label for="edadGestacional" class="form-label">Edad Gestacional (semanas)</label>
+        <input type="number" class="form-control" [(ngModel)]="participante.edadGestacional" name="edadGestacional">
+      </div>
+
+      <!-- Botón Guardar / Editar -->
+      <div class="col-12 d-flex justify-content-end mt-4">
+        <button type="button" class="btn btn-success me-2" (click)="create()" *ngIf="!participante.idPar; else elseBlock">
+          Guardar
+        </button>
+        <ng-template #elseBlock>
+          <button type="button" class="btn btn-primary" (click)="update()">Editar</button>
+        </ng-template>
+      </div>
+    </form>
+  </div>
+</div>  
