@@ -13,7 +13,6 @@ import { ApoderadoService } from '../apoderado/apoderado.service';
   imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './formParticipante.component.html',
   styleUrl: './formParticipante.component.css'
-
 })
 export class FormParticipanteComponent implements OnInit {
   public participante: Participante = new Participante();
@@ -28,7 +27,7 @@ export class FormParticipanteComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {}
 
-   ngOnInit(): void {
+  ngOnInit(): void {
     this.cargarParticipante();
 
     this.activatedRoute.params.subscribe((params) => {
@@ -46,33 +45,30 @@ export class FormParticipanteComponent implements OnInit {
         }
       });
     });
-
   }
 
+  create(): void {
+    this.participanteService.create(this.participante).subscribe(
+      (response) => {
+        console.log('Respuesta del servidor:', response);
 
-create(): void {
-  this.participanteService.create(this.participante).subscribe(
-    (response) => {
-      console.log('Respuesta del servidor:', response);
+        if (response && response.idPar) {
+          Swal.fire('Nuevo Participante', `Participante creado: ${response.nombre}`, 'success');
 
-      if (response && response.idPar) {
-        Swal.fire('Nuevo Participante', `Participante creado: ${response.nombre}`, 'success');
-
-        // Redirije a la página de detalle del participante o a la lista
-        this.router.navigate(['/participantes/detalle', response.idPar]);
-        // O si prefieres ir a la lista: this.router.navigate(['/participantes']);
-      } else {
-        console.error('No se pudo obtener el ID del participante creado');
-        Swal.fire('Error', 'No se pudo obtener el ID del participante creado', 'error');
-        this.router.navigate(['/participantes']);
+          // Redirige a la página de detalle del participante o a la lista
+          this.router.navigate(['/participantes/detalle', response.idPar]);
+        } else {
+          console.error('No se pudo obtener el ID del participante creado');
+          Swal.fire('Error', 'No se pudo obtener el ID del participante creado', 'error');
+          this.router.navigate(['/participantes']);
+        }
+      },
+      (error) => {
+        console.error('Error al crear el participante:', error);
+        Swal.fire('Error', 'Error al crear el participante', 'error');
       }
-    },
-    (error) => {
-      console.error('Error al crear el participante:', error);
-      Swal.fire('Error', 'Error al crear el participante', 'error');
-    }
-  );
-}
+    );
+  }
 
   // Cargar participante por ID
   public cargarParticipante(): void {
@@ -90,9 +86,24 @@ create(): void {
   public update(): void {
     this.participanteService.update(this.participante).subscribe((json) => {
       this.router.navigate(['/participantes']);
-      Swal.fire('Participante Actualizado', `Participante actualizado: ${json.participante.nombre}`, 'success');
+      Swal.fire(
+        'Participante Actualizado',
+        `Participante actualizado: ${json.participante.nombre}`,
+        'success'
+      );
     });
   }
 
-
+  // Continuar a gestión de exámenes
+  public continueToExams(): void {
+    if (this.apoderadoExistenteId) {
+      this.router.navigate(['examenes/form', this.participante.idPar]);
+    } else {
+      Swal.fire(
+        'Falta Apoderado',
+        'Este participante no tiene apoderado asignado. Por favor, asígnelo antes de continuar.',
+        'warning'
+      );
+    }
+  }
 }

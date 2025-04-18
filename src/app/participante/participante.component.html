@@ -39,6 +39,10 @@
               <button type="button" (click)="delete(participante)" class="btn btn-sm btn-danger">
                 <i class="fas fa-trash-alt"></i> Eliminar
               </button>
+               <!-- Botón para agregar exámenes -->
+               <button type="button" [routerLink]="['/examenes/form', participante.idPar]" class="btn btn-sm btn-info">
+                <i class="fas fa-vial"></i> Agregar Exámenes
+              </button>
             </div>
           </td>
         </tr>

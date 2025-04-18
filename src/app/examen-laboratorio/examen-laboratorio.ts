@@ -1,5 +1,5 @@
 export class ExamenLaboratorio {
-    idExa!: number;
+    idExa?: number;
     nombreExa!: string;
     examenResultado?: string;
     fechaResultado?: Date;

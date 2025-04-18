@@ -1,3 +1,4 @@
+import { ExamenLaboratorio } from "../examen-laboratorio/examen-laboratorio";
 
 export class Participante {
     idPar!: number;
@@ -10,4 +11,5 @@ export class Participante {
     edad!: number;
     gestante?: string;
     edadGestacional?: number;
+    examenesLaboratorio?: ExamenLaboratorio[];
 }

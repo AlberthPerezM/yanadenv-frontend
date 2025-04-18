@@ -59,6 +59,13 @@ export const routes: Routes = [
       { path: 'apoderados/form/:idPar', component: FormApoderadoComponent },
       { path: 'apoderados/form/:idApo/:idPar', component: FormApoderadoComponent},
       
+
+      //Examen laboratorio
+    
+      { path: 'examenes', component: ExamenLaboratorioComponent },
+      { path: 'examenes/form', component: FormExamenLaboratorioComponent },
+      { path: 'examenes/form/:idPar', component: FormExamenLaboratorioComponent },
+
       {
         path: 'dashboard',
         component: DashboardComponent

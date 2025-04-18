@@ -22,7 +22,8 @@
             <td>{{ examen.idExa }}</td>
             <td>{{ examen.nombreExa }}</td>
             <td>{{ examen.examenResultado }}</td>
-            <td>{{ examen.fechaResultado | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ examen.fechaResultado | date: 'dd/MM/yyyy' : 'UTC' }}</td>
+
             <td>
               <button type="button" [routerLink]="['/examenes/form', examen.idExa]" class="btn btn-primary">Editar</button>
               <button type="button" (click)='delete(examen)' class="btn btn-danger btn-sm">Eliminar</button>

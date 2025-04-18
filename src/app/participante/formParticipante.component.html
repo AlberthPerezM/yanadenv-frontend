@@ -13,8 +13,8 @@
   <div class="card-body bg-light">
     <form class="row g-3">
 
-       <!-- ID (solo lectura, oculto) -->
-      <div class="col-md-6" style="display:none">
+      <!-- ID (solo lectura, oculto) -->
+      <div class="col-md-6" >
         <label for="idPar" class="form-label">ID</label>
         <input type="number" class="form-control" [(ngModel)]="participante.idPar" name="idPar" disabled>
       </div>
@@ -84,6 +84,14 @@
           <button type="button" class="btn btn-primary" (click)="update()">Editar</button>
         </ng-template>
       </div>
+
+      <!-- Botón para agregar nuevo examen -->
+      <div class="col-12 d-flex justify-content-start mt-4">
+        <button *ngIf="participante.idPar" type="button" class="btn btn-warning" (click)="continueToExams()">
+          Agregar Exámenes
+        </button>
+      </div>
+
     </form>
   </div>
-</div>  
+</div>

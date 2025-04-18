@@ -32,21 +32,21 @@ export class ParticipanteService {
     );
   }
 
-  // Obtener un participante por ID
+  // Método para obtener un participante por ID
   getParticipante(id: number): Observable<Participante> {
-    return this.http.get<Participante>(`${this.urlEndPoint}/${id}`).pipe(
-      catchError(e => {
-        this.router.navigate(['/participantes']);
-        console.error(e.error.mensaje);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
-        return throwError(e);
-      })
-    );
+    return this.http.get<Participante>(`${this.urlEndPoint}/${id}`);
   }
+
 
   // Actualizar un participante
   update(participante: Participante): Observable<any> {
     return this.http.put<any>(`${this.urlEndPoint}/${participante.idPar}`, participante, { headers: this.httpHeaders });
+  }
+  // Método para actualizar un participante con sus exámenes
+  updateParticipanteExamenes(participante: Participante): Observable<Participante> {
+    return this.http.put<Participante>(`${this.urlEndPoint}/${participante.idPar}`, participante, {
+      headers: this.httpHeaders,
+    });
   }
 
   // Eliminar un participante

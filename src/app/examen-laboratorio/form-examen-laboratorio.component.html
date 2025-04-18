@@ -1,53 +1,66 @@
-<div class="card bg-dark text-white">
-  <div class="card-header">Exámenes de laboratorio</div>
-  <div class="card-body">
-    <form>
+<div class="card border-0 shadow-lg">
+  <div class="card-header bg-primary text-white fw-bold fs-5">
+    {{ titulo }}
+  </div>
+  <div class="card-body bg-light">
+    <form class="row g-3">
 
-      <!-- Selección de examen con lista desplegable -->
-      <div class="form-group row">
-        <label for="nombreExa" class="col-form-label col-sm-2">Nombre:</label>
-        <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="examen.nombreExa" name="nombreExa" list="listaExamenes">
-          <datalist id="listaExamenes">
-            <option *ngFor="let opcion of examenesDisponibles" [value]="opcion"></option>
-          </datalist>
-        </div>
+      <!-- Mostrar el ID del participante -->
+      <div class="col-12">
+        <p><strong>ID del Participante:</strong> {{ participante.idPar }}</p>
       </div>
 
-      <div class="form-group row">
-        <label class="col-form-label col-sm-2">Resultado:</label>
-        <div class="col-sm-6">
-          <div class="form-check">
-            <input type="radio" id="positivo" name="resultado" [(ngModel)]="examen.examenResultado" value="Positivo">
-            <label for="positivo">Positivo</label>
+      <!-- Lista dinámica de exámenes -->
+      <div *ngFor="let examen of examenes; let i = index" class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Examen {{ i + 1 }}</h5>
+
+          <!-- Selección de examen con lista desplegable -->
+          <div class="col-md-6">
+            <label for="nombreExa-{{ i }}" class="form-label">Nombre</label>
+            <input type="text" class="form-control" [(ngModel)]="examen.nombreExa" name="nombreExa-{{ i }}" list="listaExamenes">
+            <datalist id="listaExamenes">
+              <option *ngFor="let opcion of examenesDisponibles" [value]="opcion"></option>
+            </datalist>
           </div>
-          <div class="form-check">
-            <input type="radio" id="negativo" name="resultado" [(ngModel)]="examen.examenResultado" value="Negativo">
-            <label for="negativo">Negativo</label>
+
+          <!-- Resultado del examen -->
+          <div class="col-md-6">
+            <label class="form-label d-block">Resultado</label>
+            <div class="form-check form-check-inline">
+              <input type="radio" id="positivo-{{ i }}" name="resultado-{{ i }}" [(ngModel)]="examen.examenResultado" value="Positivo" class="form-check-input">
+              <label for="positivo-{{ i }}" class="form-check-label">Positivo</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" id="negativo-{{ i }}" name="resultado-{{ i }}" [(ngModel)]="examen.examenResultado" value="Negativo" class="form-check-input">
+              <label for="negativo-{{ i }}" class="form-check-label">Negativo</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" id="noSeSabe-{{ i }}" name="resultado-{{ i }}" [(ngModel)]="examen.examenResultado" value="No se sabe" class="form-check-input">
+              <label for="noSeSabe-{{ i }}" class="form-check-label">No se sabe</label>
+            </div>
           </div>
-          <div class="form-check">
-            <input type="radio" id="noSeSabe" name="resultado" [(ngModel)]="examen.examenResultado" value="No se sabe">
-            <label for="noSeSabe">No se sabe</label>
+
+          <!-- Fecha del resultado -->
+          <div class="col-md-6">
+            <label for="fechaResultado-{{ i }}" class="form-label">Fecha</label>
+            <input type="date" class="form-control" [(ngModel)]="examen.fechaResultado" name="fechaResultado-{{ i }}">
+          </div>
+
+          <!-- Botón para eliminar examen -->
+          <div class="col-12 d-flex justify-content-end mt-2">
+            <button type="button" class="btn btn-danger" (click)="eliminarExamen(i)">Eliminar Examen</button>
           </div>
         </div>
       </div>
 
-      <div class="form-group row">
-        <label for="fechaResultado" class="col-form-label col-sm-2">Fecha:</label>
-        <div class="col-sm-6">
-          <input type="date" class="form-control" [(ngModel)]="examen.fechaResultado" name="fechaResultado">
-        </div>
+      <!-- Botones para agregar exámenes y guardarlos -->
+      <div class="col-12 d-flex justify-content-end mt-4">
+        <button type="button" class="btn btn-primary me-2" (click)="agregarExamen()">Agregar Examen</button>
+        <button type="button" class="btn btn-success" (click)="guardarExamenes()" [disabled]="!participante.idPar">
+          Guardar Exámenes
+        </button>
       </div>
-
-      <div class="form-group row">
-        <div class="col-sm-6">
-          <button class="btn btn-primary" role="button" (click)="create()" *ngIf="!examen.idExa else elseBlock">Crear</button>
-          <ng-template #elseBlock>
-            <button class="btn btn-primary" role="button" (click)="update()">Editar</button>
-          </ng-template>
-        </div>
-      </div>
-
     </form>
   </div>
 </div>
