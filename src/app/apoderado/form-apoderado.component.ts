@@ -43,17 +43,7 @@ export class FormApoderadoComponent implements OnInit {
   participanteSeleccionado(): void {
     this.nivelSeleccionado = this.idParticipante !== undefined ? this.idParticipante : this.apoderado.participante;
   }
-  /*
-  cargarParticipantes(): void {
-    this.participanteService.getParticipantes().subscribe((participantes) => {
-      this.participantes = participantes;
 
-      // Si no tiene un participante asignado, tomar el valor captado por el parametro
-      if (!this.apoderado.participante && this.participantes.length > 0) {
-        this.apoderado.participante = this.participantes[this.participantes.length - 1]; // Último participante captado
-      }
-    });
-  }*/
     cargarParticipantes(): void {
       this.participanteService.getParticipantes().subscribe((participantes) => {
         this.participantes = participantes;

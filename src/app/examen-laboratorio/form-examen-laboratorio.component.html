@@ -7,9 +7,11 @@
 
       <!-- Mostrar el ID del participante -->
       <div class="col-12">
-        <p><strong>ID del Participante:</strong> {{ participante.idPar }}</p>
+        <p><strong>ID del Participante:</strong> {{ participante?.idPar || 'No definido' }}</p>
       </div>
-
+      <div class="col-12">
+        <p><strong>Nombre:</strong> {{ participante?.nombre || 'No definido' }}</p>
+      </div>
       <!-- Lista dinámica de exámenes -->
       <div *ngFor="let examen of examenes; let i = index" class="card mb-3">
         <div class="card-body">
@@ -18,7 +20,14 @@
           <!-- Selección de examen con lista desplegable -->
           <div class="col-md-6">
             <label for="nombreExa-{{ i }}" class="form-label">Nombre</label>
-            <input type="text" class="form-control" [(ngModel)]="examen.nombreExa" name="nombreExa-{{ i }}" list="listaExamenes">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="examen.nombreExa"
+              name="nombreExa-{{ i }}"
+              list="listaExamenes"
+              required
+            />
             <datalist id="listaExamenes">
               <option *ngFor="let opcion of examenesDisponibles" [value]="opcion"></option>
             </datalist>
@@ -28,15 +37,36 @@
           <div class="col-md-6">
             <label class="form-label d-block">Resultado</label>
             <div class="form-check form-check-inline">
-              <input type="radio" id="positivo-{{ i }}" name="resultado-{{ i }}" [(ngModel)]="examen.examenResultado" value="Positivo" class="form-check-input">
+              <input
+                type="radio"
+                id="positivo-{{ i }}"
+                name="resultado-{{ i }}"
+                [(ngModel)]="examen.examenResultado"
+                value="Positivo"
+                class="form-check-input"
+              />
               <label for="positivo-{{ i }}" class="form-check-label">Positivo</label>
             </div>
             <div class="form-check form-check-inline">
-              <input type="radio" id="negativo-{{ i }}" name="resultado-{{ i }}" [(ngModel)]="examen.examenResultado" value="Negativo" class="form-check-input">
+              <input
+                type="radio"
+                id="negativo-{{ i }}"
+                name="resultado-{{ i }}"
+                [(ngModel)]="examen.examenResultado"
+                value="Negativo"
+                class="form-check-input"
+              />
               <label for="negativo-{{ i }}" class="form-check-label">Negativo</label>
             </div>
             <div class="form-check form-check-inline">
-              <input type="radio" id="noSeSabe-{{ i }}" name="resultado-{{ i }}" [(ngModel)]="examen.examenResultado" value="No se sabe" class="form-check-input">
+              <input
+                type="radio"
+                id="noSeSabe-{{ i }}"
+                name="resultado-{{ i }}"
+                [(ngModel)]="examen.examenResultado"
+                value="No se sabe"
+                class="form-check-input"
+              />
               <label for="noSeSabe-{{ i }}" class="form-check-label">No se sabe</label>
             </div>
           </div>
@@ -44,7 +74,13 @@
           <!-- Fecha del resultado -->
           <div class="col-md-6">
             <label for="fechaResultado-{{ i }}" class="form-label">Fecha</label>
-            <input type="date" class="form-control" [(ngModel)]="examen.fechaResultado" name="fechaResultado-{{ i }}">
+            <input
+              type="date"
+              class="form-control"
+              [(ngModel)]="examen.fechaResultado"
+              name="fechaResultado-{{ i }}"
+              required
+            />
           </div>
 
           <!-- Botón para eliminar examen -->
@@ -57,7 +93,12 @@
       <!-- Botones para agregar exámenes y guardarlos -->
       <div class="col-12 d-flex justify-content-end mt-4">
         <button type="button" class="btn btn-primary me-2" (click)="agregarExamen()">Agregar Examen</button>
-        <button type="button" class="btn btn-success" (click)="guardarExamenes()" [disabled]="!participante.idPar">
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="guardarExamenes()"
+          [disabled]="!participante?.idPar || examenes.length === 0"
+        >
           Guardar Exámenes
         </button>
       </div>
