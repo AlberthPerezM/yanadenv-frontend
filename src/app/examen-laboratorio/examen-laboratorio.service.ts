@@ -38,9 +38,7 @@ export class ExamenLaboratorioService {
     );
   }
   
-  /**
-   * Obtener todos los exámenes
-   */
+  /** Obtener todos los exámenes*/
   getExamenes(): Observable<ExamenLaboratorio[]> {
     return this.http.get(this.urlEndPoint).pipe(
       map(response => response as ExamenLaboratorio[]),
@@ -104,31 +102,6 @@ export class ExamenLaboratorioService {
     );
   }
   
-  /**
-   * Método para guardar múltiples exámenes y asociarlos a un participante en una sola operación
-   * NUEVO: Este método simplifica la creación de múltiples exámenes
-   */
- /* saveExamenes(examenes: ExamenLaboratorio[], idParticipante: number): Observable<any> {
-    if (!examenes || examenes.length === 0) {
-      return of({ message: 'No hay exámenes para guardar' });
-    }
-    
-    const url = `${this.urlEndPoint}/participante/${idParticipante}/multiple`;
-    
-    console.log('Guardando múltiples exámenes:', examenes);
-    console.log('Para el participante ID:', idParticipante);
-    
-    return this.http.post<any>(url, examenes, { headers: this.httpHeaders }).pipe(
-      tap(response => {
-        console.log('Respuesta del servidor (múltiples):', response);
-      }),
-      catchError(e => {
-        console.error('Error al guardar múltiples exámenes:', e);
-        Swal.fire('Error', 'No se pudieron guardar los exámenes', 'error');
-        return throwError(() => e);
-      })
-    );
-  }*/
     saveExamenes(examenes: ExamenLaboratorio[], idParticipante: number): Observable<any> {
       const url = `http://localhost:8080/api/participantes/${idParticipante}/examenes`;
       return this.http.post<any>(url, examenes, { 
@@ -143,9 +116,6 @@ export class ExamenLaboratorioService {
       );
   }
   
-  /**
-   * Obtener un examen por ID
-   */
   getExamen(id: number): Observable<ExamenLaboratorio> {
     return this.http.get<ExamenLaboratorio>(`${this.urlEndPoint}/${id}`).pipe(
       catchError((e) => {
@@ -160,9 +130,6 @@ export class ExamenLaboratorioService {
     );
   }
 
-  /**
-   * Actualizar un examen existente
-   */
   update(examen: ExamenLaboratorio): Observable<any> {
     // Verificamos que el examen tenga un ID asignado
     if (!examen.idExa) {
@@ -183,9 +150,6 @@ export class ExamenLaboratorioService {
     );
   }
 
-  /**
-   * Eliminar un examen por ID
-   */
   delete(id: number): Observable<ExamenLaboratorio> {
     return this.http.delete<ExamenLaboratorio>(`${this.urlEndPoint}/${id}`, { headers: this.httpHeaders }).pipe(
       catchError(e => {

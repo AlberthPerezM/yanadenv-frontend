@@ -94,16 +94,16 @@ export class FormParticipanteComponent implements OnInit {
     });
   }
 
-  // Continuar a gestión de exámenes
   public continueToExams(): void {
-    if (this.apoderadoExistenteId) {
-      this.router.navigate(['examenes/form', this.participante.idPar]);
-    } else {
+    // Solo requerir apoderado si el participante es menor de edad
+    if (this.participante.edad < 18 && !this.apoderadoExistenteId) {
       Swal.fire(
         'Falta Apoderado',
-        'Este participante no tiene apoderado asignado. Por favor, asígnelo antes de continuar.',
+        'Los participantes menores de edad requieren un apoderado asignado.',
         'warning'
       );
+    } else {
+      this.router.navigate(['examenes/form', this.participante.idPar]);
     }
   }
 }
