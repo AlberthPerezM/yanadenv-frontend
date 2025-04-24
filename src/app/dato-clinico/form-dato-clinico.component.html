@@ -1,0 +1,437 @@
+<div class="card border-0 shadow-lg">
+
+    <div class="card-header bg-primary text-white fw-bold fs-5 d-flex justify-content-between align-items-center">
+      {{ titulo }}
+      <button type="button" (click)="router.navigate(['/datoclinicos'])" class="btn btn-sm btn-light">
+        <i class="bi bi-arrow-left"></i> Volver
+      </button>
+    </div>
+  
+    <div class="card-body bg-light">
+      <form class="row g-3">
+        <!-- Mensaje informativo -->
+        <div class="col-12">
+          <div class="alert alert-info mb-4">
+            <i class="bi bi-info-circle me-2"></i> Complete todos los campos requeridos (<span class="text-danger">*</span>) para registrar el dato clínico.
+          </div>
+        </div>
+  
+        <!-- Fechas -->
+        <div class="col-md-6 mb-3">
+          <label for="fechaInicioSintomas" class="form-label">
+            Fecha Inicio Síntomas <span class="text-danger">*</span>
+          </label>
+          <input type="date" class="form-control" id="fechaInicioSintomas"
+                 [(ngModel)]="datoclinico.fechaInicioSintomas"
+                 name="fechaInicioSintomas" required>
+          <div class="form-text">Seleccione la fecha cuando comenzaron los primeros síntomas</div>
+        </div>
+  
+        <div class="col-md-6 mb-3">
+          <label for="fechaTomaMuestra1" class="form-label">
+            Fecha Toma Muestra 1
+          </label>
+          <input type="date" class="form-control" id="fechaTomaMuestra1"
+                 [(ngModel)]="datoclinico.fechaTomaMuestra1"
+                 name="fechaTomaMuestra1">
+          <div class="form-text">Fecha de la primera muestra tomada</div>
+        </div>
+  
+        <div class="col-md-6 mb-3">
+          <label for="fechaTomaMuestra2" class="form-label">
+            Fecha Toma Muestra 2
+          </label>
+          <input type="date" class="form-control" id="fechaTomaMuestra2"
+                 [(ngModel)]="datoclinico.fechaTomaMuestra2"
+                 name="fechaTomaMuestra2">
+          <div class="form-text">Fecha de la segunda muestra tomada (si aplica)</div>
+        </div>
+  
+        <!-- Síntomas frecuentes -->
+        <div class="col-12">
+          <div class="card mb-3">
+            <div class="card-header bg-light-subtle">
+              <label class="form-label fw-bold">Síntomas Frecuentes</label>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-3 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.fiebre" name="fiebre" id="fiebre"
+                           (change)="onFiebreChange()">
+                    <label class="form-check-label" for="fiebre">
+                      <i class="bi bi-thermometer-high me-2"></i>Fiebre
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-3 mb-2" *ngIf="datoclinico.fiebre">
+                  <input class="form-control" type="number" step="0.1"
+                         [(ngModel)]="datoclinico.temperatura"
+                         name="temperatura" placeholder="Temperatura (°C)">
+                </div>
+  
+                <div class="col-md-3 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.mialgias" name="mialgias" id="mialgias">
+                    <label class="form-check-label" for="mialgias">
+                      <i class="bi bi-body-text me-2"></i>Mialgias
+                    </label>
+                  </div>
+                </div>
+  
+                <div class="col-md-3 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.cefalea" name="cefalea" id="cefalea">
+                    <label class="form-check-label" for="cefalea">
+                      <i class="bi bi-head-side-virus me-2"></i>Cefalea
+                    </label>
+                  </div>
+                </div>
+  
+                <div class="col-md-3 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.dolorOcular" name="dolorOcular" id="dolorOcular">
+                    <label class="form-check-label" for="dolorOcular">
+                      <i class="bi bi-eye me-2"></i>Dolor Ocular
+                    </label>
+                  </div>
+                </div>
+  
+                <div class="col-md-3 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.dolorLumbar" name="dolorLumbar" id="dolorLumbar">
+                    <label class="form-check-label" for="dolorLumbar">
+                      <i class="bi bi-file-medical me-2"></i>Dolor Lumbar
+                    </label>
+                  </div>
+                </div>
+  
+                <div class="col-md-3 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.erupcionCutanea" name="erupcionCutanea" id="erupcionCutanea">
+                    <label class="form-check-label" for="erupcionCutanea">
+                      <i class="bi bi-droplet me-2"></i>Erupción Cutánea
+                    </label>
+                  </div>
+                </div>
+  
+                <div class="col-md-3 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.conjuntivitis" name="conjuntivitis" id="conjuntivitis">
+                    <label class="form-check-label" for="conjuntivitis">
+                      <i class="bi bi-eye-fill me-2"></i>Conjuntivitis
+                    </label>
+                  </div>
+                </div>
+  
+                <div class="col-md-3 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.nauseasVomitos" name="nauseasVomitos" id="nauseasVomitos">
+                    <label class="form-check-label" for="nauseasVomitos">
+                      <i class="bi bi-emoji-dizzy me-2"></i>Náuseas/Vómitos
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Otros síntomas -->
+        <div class="col-12">
+          <div class="card mb-3">
+            <div class="card-header bg-light-subtle">
+              <label class="form-label fw-bold">Otros Síntomas</label>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-3 mb-2">
+                  <input type="text" class="form-control"
+                         [(ngModel)]="datoclinico.otrosSintomas1"
+                         name="otrosSintomas1" placeholder="Otro síntoma">
+                </div>
+                <div class="col-md-3 mb-2" *ngIf="showOtroSintoma2">
+                  <input type="text" class="form-control"
+                         [(ngModel)]="datoclinico.otrosSintomas2"
+                         name="otrosSintomas2" placeholder="Otro síntoma">
+                </div>
+                <div class="col-md-3 mb-2" *ngIf="showOtroSintoma3">
+                  <input type="text" class="form-control"
+                         [(ngModel)]="datoclinico.otrosSintomas3"
+                         name="otrosSintomas3" placeholder="Otro síntoma">
+                </div>
+                <div class="col-md-3 mb-2" *ngIf="showOtroSintoma4">
+                  <input type="text" class="form-control"
+                         [(ngModel)]="datoclinico.otrosSintomas4"
+                         name="otrosSintomas4" placeholder="Otro síntoma">
+                </div>
+                <div class="col-md-3 mb-2">
+                  <button type="button" class="btn btn-sm btn-outline-primary"
+                          (click)="addOtroSintoma()" *ngIf="!showOtroSintoma4"
+                          [disabled]="!datoclinico.otrosSintomas1 && showOtroSintoma2 && !datoclinico.otrosSintomas2 && showOtroSintoma3 && !datoclinico.otrosSintomas3">
+                    <i class="bi bi-plus"></i> Añadir síntoma
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Signos de alarma -->
+        <div class="col-12">
+          <div class="card mb-3">
+            <div class="card-header bg-light-subtle">
+              <label class="form-label fw-bold">Signos de Alarma</label>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.dolorAbdominalIntenso"
+                           name="dolorAbdominalIntenso" id="dolorAbdominalIntenso">
+                    <label class="form-check-label" for="dolorAbdominalIntenso">
+                      <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>Dolor Abdominal Intenso
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.dolorToracicoDisnea"
+                           name="dolorToracicoDisnea" id="dolorToracicoDisnea">
+                    <label class="form-check-label" for="dolorToracicoDisnea">
+                      <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>Dolor Torácico/Disnea
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.derrameSeroso"
+                           name="derrameSeroso" id="derrameSeroso">
+                    <label class="form-check-label" for="derrameSeroso">
+                      <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>Derrame Seroso
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.hipotermia"
+                           name="hipotermia" id="hipotermia">
+                    <label class="form-check-label" for="hipotermia">
+                      <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>Hipotermia
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.diuresisDisminuida"
+                           name="diuresisDisminuida" id="diuresisDisminuida">
+                    <label class="form-check-label" for="diuresisDisminuida">
+                      <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>Diuresis Disminuida
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.hepatomegalia"
+                           name="hepatomegalia" id="hepatomegalia">
+                    <label class="form-check-label" for="hepatomegalia">
+                      <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>Hepatomegalia
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.ictericia"
+                           name="ictericia" id="ictericia">
+                    <label class="form-check-label" for="ictericia">
+                      <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>Ictericia
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.estadoMentalAlterado"
+                           name="estadoMentalAlterado" id="estadoMentalAlterado">
+                    <label class="form-check-label" for="estadoMentalAlterado">
+                      <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>Estado Mental Alterado
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.hematocritoIncrementado"
+                           name="hematocritoIncrementado" id="hematocritoIncrementado">
+                    <label class="form-check-label" for="hematocritoIncrementado">
+                      <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>Hematocrito Incrementado
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Signos de gravedad -->
+        <div class="col-12">
+          <div class="card mb-3 border-danger">
+            <div class="card-header bg-danger-subtle">
+              <label class="form-label fw-bold text-danger">Signos de Gravedad</label>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.pulsoIndetectable"
+                           name="pulsoIndetectable" id="pulsoIndetectable"
+                           (change)="onCompromisoOrganosChange()">
+                    <label class="form-check-label" for="pulsoIndetectable">
+                      <i class="bi bi-exclamation-octagon-fill text-danger me-2"></i>Pulso Indetectable
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.extremidadesFrias"
+                           name="extremidadesFrias" id="extremidadesFrias">
+                    <label class="form-check-label" for="extremidadesFrias">
+                      <i class="bi bi-exclamation-octagon-fill text-danger me-2"></i>Extremidades Frías
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.difPresionArterial"
+                           name="difPresionArterial" id="difPresionArterial">
+                    <label class="form-check-label" for="difPresionArterial">
+                      <i class="bi bi-exclamation-octagon-fill text-danger me-2"></i>Diferencia Presión Arterial
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.compromisoOrganos"
+                           name="compromisoOrganos" id="compromisoOrganos"
+                           (change)="onCompromisoOrganosChange()">
+                    <label class="form-check-label" for="compromisoOrganos">
+                      <i class="bi bi-exclamation-octagon-fill text-danger me-2"></i>Compromiso de Órganos
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-2">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox"
+                           [(ngModel)]="datoclinico.sangradoGrave"
+                           name="sangradoGrave" id="sangradoGrave"
+                           (change)="onSangradoGraveChange()">
+                    <label class="form-check-label" for="sangradoGrave">
+                      <i class="bi bi-exclamation-octagon-fill text-danger me-2"></i>Sangrado Grave
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Campos adicionales -->
+        <div class="col-md-6" *ngIf="datoclinico.compromisoOrganos">
+          <label for="tipoCompromisoOrganos" class="form-label">
+            Tipo Compromiso Órganos <span class="text-danger">*</span>
+          </label>
+          <input type="text" class="form-control"
+                 id="tipoCompromisoOrganos"
+                 [(ngModel)]="datoclinico.tipoCompromisoOrganos"
+                 name="tipoCompromisoOrganos" required>
+          <div class="form-text">Especifique qué órganos están comprometidos</div>
+        </div>
+  
+        <div class="col-md-6" *ngIf="datoclinico.sangradoGrave">
+          <label for="tipoSangrado" class="form-label">
+            Tipo Sangrado <span class="text-danger">*</span>
+          </label>
+          <input type="text" class="form-control"
+                 id="tipoSangrado"
+                 [(ngModel)]="datoclinico.tipoSangrado"
+                 name="tipoSangrado" required>
+          <div class="form-text">Describa el tipo de sangrado observado</div>
+        </div>
+  
+        <!-- Escala de Glasgow -->
+        <div class="col-12">
+          <div class="card mb-3">
+            <div class="card-header bg-light-subtle">
+              <label class="form-label fw-bold">Escala Glasgow</label>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4 mb-2">
+                  <label for="glasgowAperturaOcular" class="form-label">Apertura Ocular</label>
+                  <input type="number" class="form-control"
+                         id="glasgowAperturaOcular"
+                         [(ngModel)]="datoclinico.glasgowAperturaOcular"
+                         name="glasgowAperturaOcular" min="1" max="4">
+                  <div class="form-text">1: Ninguna, 2: Al dolor, 3: A la voz, 4: Espontánea</div>
+                </div>
+                <div class="col-md-4 mb-2">
+                  <label for="glasgowAperturaMotora" class="form-label">Respuesta Motora</label>
+                  <input type="number" class="form-control"
+                         id="glasgowAperturaMotora"
+                         [(ngModel)]="datoclinico.glasgowAperturaMotora"
+                         name="glasgowAperturaMotora" min="1" max="6">
+                  <div class="form-text">1: Ninguna, 2: Extensión, 3: Flexión, 4: Retirada, 5: Localiza, 6: Obedece</div>
+                </div>
+                <div class="col-md-4 mb-2">
+                  <label for="glasgowAperturaVerbal" class="form-label">Respuesta Verbal</label>
+                  <input type="number" class="form-control"
+                         id="glasgowAperturaVerbal"
+                         [(ngModel)]="datoclinico.glasgowAperturaVerbal"
+                         name="glasgowAperturaVerbal" min="1" max="5">
+                  <div class="form-text">1: Ninguna, 2: Sonidos, 3: Palabras, 4: Confusa, 5: Orientada</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Botones -->
+        <div class="col-12 d-flex justify-content-end mt-4 gap-2">
+          <button type="button" (click)="router.navigate(['/datoclinicos'])"
+                  class="btn btn-outline-secondary">
+            <i class="bi bi-x-circle me-2"></i>Cancelar
+          </button>
+          
+          <button type="button" (click)="create()" *ngIf="!datoclinico.idDat; else elseBlock"
+                  class="btn btn-success">
+            <i class="bi bi-save me-2"></i>Guardar
+          </button>
+          
+          <ng-template #elseBlock>
+            <button type="button" (click)="update()" class="btn btn-primary">
+              <i class="bi bi-pencil-square me-2"></i>Actualizar
+            </button>
+          </ng-template>
+        </div>
+      </form>
+    </div>
+  </div>

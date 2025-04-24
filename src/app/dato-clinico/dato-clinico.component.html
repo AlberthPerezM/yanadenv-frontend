@@ -1,0 +1,43 @@
+<!-- datoclinico.component.html -->
+<div class="card border-primary mb-3">
+    <div class="card-header bg-primary text-white">
+      Datos Clínicos
+    </div>
+    <div class="card-body">
+      <h5 class="card-title text-primary">Listado de Datos Clínicos</h5>
+      <div class="my-2 text-left">
+        <button [routerLink]="['/datoclinicos/form']" class="btn btn-success">
+          Crear Dato Clínico
+        </button>
+      </div>
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Fecha Registro</th>
+            <th>Fecha Síntomas</th>
+            <th>Fiebre</th>
+            <th>Temperatura</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let dc of datoclinicos">
+            <td>{{ dc.idDat }}</td>
+            <td>{{ dc.fechaRegistro | date:'short' }}</td>
+            <td>{{ dc.fechaInicioSintomas | date:'short' }}</td>
+            <td>{{ dc.fiebre ? 'Sí' : 'No' }}</td>
+            <td>{{ dc.temperatura }}</td>
+            <td>
+              <button [routerLink]="['/datoclinicos/form', dc.idDat]" class="btn btn-primary btn-sm">
+                Editar
+              </button>
+              <button (click)="delete(dc)" class="btn btn-danger btn-sm ms-1">
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

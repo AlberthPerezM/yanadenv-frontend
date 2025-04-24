@@ -11,6 +11,8 @@ import { SidebarComponent } from './shared/components/sidebar/sidebar.component'
 import { HeaderComponent } from './shared/components/header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayoutComponent } from './shared/components/layout/layout.component';
+import { DatoClinicoComponent } from './dato-clinico/dato-clinico.component';
+import { FormDatoClinicoComponent } from './dato-clinico/form-dato-clinico.component';
 
 export const routes: Routes = [
  /* { path: '', redirectTo: '/sidebar', pathMatch: 'full' },
@@ -65,6 +67,11 @@ export const routes: Routes = [
       { path: 'examenes', component: ExamenLaboratorioComponent },
       { path: 'examenes/form', component: FormExamenLaboratorioComponent },
       { path: 'examenes/form/:idPar', component: FormExamenLaboratorioComponent },
+       
+      //DatoClinico
+      { path: 'datoclinicos', component: DatoClinicoComponent },
+      { path: 'datoclinicos/form', component: FormDatoClinicoComponent },
+      { path: 'datoclinicos/form/:idDat', component: FormDatoClinicoComponent },
 
       {
         path: 'dashboard',
