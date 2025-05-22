@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ParticipanteService } from '../participante/participante.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,5 +9,19 @@ import { Component } from '@angular/core';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
+  participantesCount: number = 0;
+  lastUpdate: string = '';
 
+  constructor(private participanteService: ParticipanteService) {}
+
+  ngOnInit(): void {
+    this.loadParticipantesCount();
+  }
+
+  loadParticipantesCount(): void {
+    this.participanteService.countParticipantes().subscribe(count => {
+      this.participantesCount = count;
+      this.lastUpdate = new Date().toLocaleString();
+    });
+  }
 }

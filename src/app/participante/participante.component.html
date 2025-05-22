@@ -19,6 +19,8 @@
           <th>Gestante</th>
           <th>Edad Gest.</th>
           <th>Acciones</th>
+          <th>Agregar</th>
+
         </tr>
       </thead>
       <tbody>
@@ -39,10 +41,22 @@
               <button type="button" (click)="delete(participante)" class="btn btn-sm btn-danger">
                 <i class="fas fa-trash-alt"></i> Eliminar
               </button>
+           
+              
+            </div>
+          </td>
+          <td>
+            <div class="d-flex justify-content-center gap-2 flex-wrap">
+
                <!-- Botón para agregar exámenes -->
                <button type="button" [routerLink]="['/examenes/form', participante.idPar]" class="btn btn-sm btn-info">
                 <i class="fas fa-vial"></i> Agregar Exámenes
               </button>
+              <!-- Botón para agregar exámenes -->
+              <button type="button" [routerLink]="['/datoclinicos/form', participante.idPar]" class="btn btn-sm btn-warning">
+                <i class="fas fa-stethoscope"></i> Datos Clínicos
+              </button>
+              
             </div>
           </td>
         </tr>

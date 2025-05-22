@@ -11,87 +11,91 @@
     {{ titulo }}
   </div>
   <div class="card-body bg-light">
-    <form class="row g-3">
+    <!-- Simulación de pestañas (solo visual) -->
+    <div class="d-flex mb-4 border-bottom pb-2">
+      <h6 class="me-4 fw-bold"  >Participante</h6>
 
-      <!-- ID (solo lectura, oculto) -->
-      <div class="col-md-6" >
-        <label for="idPar" class="form-label">ID</label>
-        <input type="number" class="form-control" [(ngModel)]="participante.idPar" name="idPar" disabled>
-      </div>
+      <h6 class="me-4 fw-bold"  [routerLink]="['/examenes/form', participante.idPar]">Examenes</h6>
       
+      <h6 class="text-muted"  [routerLink]="['/datoclinicos/form', participante.idPar]" >Datos clínicos</h6>
+    </div>
+
+    <form class="row g-3">
+      <!-- Fila 1: Nombres -->
       <div class="col-md-6">
-        <label for="nombre" class="form-label">Nombre</label>
+        <label class="form-label">Nombres</label>
         <input type="text" class="form-control" [(ngModel)]="participante.nombre" name="nombre">
       </div>
 
+      <!-- Fila 2: Apellidos -->
       <div class="col-md-6">
-        <label for="apellidoPaterno" class="form-label">Apellido Paterno</label>
+        <label class="form-label">Apellido Paterno</label>
         <input type="text" class="form-control" [(ngModel)]="participante.apellidoPaterno" name="apellidoPaterno">
       </div>
-
       <div class="col-md-6">
-        <label for="apellidoMaterno" class="form-label">Apellido Materno</label>
+        <label class="form-label">Apellido Materno</label>
         <input type="text" class="form-control" [(ngModel)]="participante.apellidoMaterno" name="apellidoMaterno">
       </div>
 
+      <!-- Fila 3: Sexo -->
       <div class="col-md-6">
-        <label for="sexo" class="form-label">Sexo</label>
+        <label class="form-label">Sexo</label>
         <select class="form-select" [(ngModel)]="participante.sexo" name="sexo">
           <option value="M">Masculino</option>
           <option value="F">Femenino</option>
         </select>
       </div>
 
+      <!-- Fila 4: Documento -->
       <div class="col-md-6">
-        <label for="tipoDocumento" class="form-label">Tipo de Documento</label>
+        <label class="form-label">Documento de identidad</label>
         <select class="form-select" [(ngModel)]="participante.tipoDocumento" name="tipoDocumento">
           <option value="DNI">DNI</option>
           <option value="Carnet de Extranjería">Carnet de Extranjería</option>
         </select>
       </div>
-
       <div class="col-md-6">
-        <label for="numeroDocumento" class="form-label">Número de Documento</label>
+        <label class="form-label">N° de documento</label>
         <input type="text" class="form-control" [(ngModel)]="participante.numeroDocumento" name="numeroDocumento">
       </div>
 
+      <!-- Fila 5: Fecha nacimiento y edad -->
+      
       <div class="col-md-6">
-        <label for="edad" class="form-label">Edad</label>
+        <label class="form-label">Edad</label>
         <input type="number" class="form-control" [(ngModel)]="participante.edad" name="edad">
       </div>
 
-      <!-- Solo mostrar si es mujer -->
+      <!-- Campos condicionales para mujeres -->
       <div class="col-md-6" *ngIf="participante.sexo === 'F'">
-        <label for="gestante" class="form-label">Gestante</label>
+        <label class="form-label">Gestante</label>
         <select class="form-select" [(ngModel)]="participante.gestante" name="gestante">
           <option value="Sí">Sí</option>
           <option value="No">No</option>
         </select>
       </div>
 
-      <!-- Solo mostrar si es gestante -->
       <div class="col-md-6" *ngIf="participante.sexo === 'F' && participante.gestante === 'Sí'">
-        <label for="edadGestacional" class="form-label">Edad Gestacional (semanas)</label>
+        <label class="form-label">Edad gestacional (semanas)</label>
         <input type="number" class="form-control" [(ngModel)]="participante.edadGestacional" name="edadGestacional">
       </div>
 
-      <!-- Botón Guardar / Editar -->
+      <!-- Botones (mantenidos igual) -->
       <div class="col-12 d-flex justify-content-end mt-4">
         <button type="button" class="btn btn-success me-2" (click)="create()" *ngIf="!participante.idPar; else elseBlock">
           Guardar
         </button>
         <ng-template #elseBlock>
           <button type="button" class="btn btn-primary" (click)="update()">Editar</button>
-        </ng-template>
-      </div>
-
-      <!-- Botón para agregar nuevo examen -->
-      <div class="col-12 d-flex justify-content-start mt-4">
+        </ng-template> 
         <button *ngIf="participante.idPar" type="button" class="btn btn-warning" (click)="continueToExams()">
           Agregar Exámenes
         </button>
       </div>
 
+      <div class="col-12 d-flex justify-content-start mt-4">
+       
+      </div>
     </form>
   </div>
 </div>

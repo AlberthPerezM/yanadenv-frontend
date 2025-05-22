@@ -42,6 +42,11 @@ export class ParticipanteService {
   update(participante: Participante): Observable<any> {
     return this.http.put<any>(`${this.urlEndPoint}/${participante.idPar}`, participante, { headers: this.httpHeaders });
   }
+
+  //Metodo para contar participante
+  countParticipantes(): Observable<number> {
+    return this.http.get<number>(`${this.urlEndPoint}/count`);
+  }
   // Método para actualizar un participante con sus exámenes
   updateParticipanteExamenes(participante: Participante): Observable<Participante> {
     return this.http.put<Participante>(`${this.urlEndPoint}/${participante.idPar}`, participante, {
