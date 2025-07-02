@@ -4,20 +4,20 @@ import { SidebarComponent } from './shared/components/sidebar/sidebar.component'
 import { HeaderComponent } from './shared/components/header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
-import { ParticipantesComponent } from './participante/participante.component';
-import { FormParticipanteComponent } from './participante/formParticipante.component';
+import { ParticipantesComponent } from './components/participante/participante.component';
+import { FormParticipanteComponent } from './components/participante/formParticipante.component';
 
-import { ApoderadosComponent } from './apoderado/apoderado.component';
-import { FormApoderadoComponent } from './apoderado/form-apoderado.component';
+import { ApoderadosComponent } from './components/apoderado/apoderado.component';
+import { FormApoderadoComponent } from './components/apoderado/form-apoderado.component';
 
-import { ExamenLaboratorioComponent } from './examen-laboratorio/examen-laboratorio.component';
-import { FormExamenLaboratorioComponent } from './examen-laboratorio/form-examen-laboratorio.component';
+import { ExamenLaboratorioComponent } from './components/examen-laboratorio/examen-laboratorio.component';
+import { FormExamenLaboratorioComponent } from './components/examen-laboratorio/form-examen-laboratorio.component';
 
-import { DatoClinicoComponent } from './dato-clinico/dato-clinico.component';
-import { FormDatoClinicoComponent } from './dato-clinico/form-dato-clinico.component';
+import { DatoClinicoComponent } from './components/dato-clinico/dato-clinico.component';
+import { FormDatoClinicoComponent } from './components/dato-clinico/form-dato-clinico.component';
 
-import { UserComponent } from './user/user.component';
-import { UserFormComponent } from './user/user-form.component';
+import { UserComponent } from './components/user/user.component';
+import { UserFormComponent } from './components/user/user-form.component';
 import { AuthComponent } from './auth/auth.component';
 import { authGuard } from './guards/auth.guard';
 

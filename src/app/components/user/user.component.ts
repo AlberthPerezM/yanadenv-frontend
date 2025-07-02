@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { User } from './user';
 
-import { PaginatorComponent } from '../paginator/paginator.component';
-import { UserService } from '../service/user.service';
-import { SharingDataService } from '../service/sharing-data.service';
-import { AuthService } from '../service/auth.service';
+import { PaginatorComponent } from '../../paginator/paginator.component';
+import { UserService } from '../../service/user.service';
+import { SharingDataService } from '../../service/sharing-data.service';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'user',

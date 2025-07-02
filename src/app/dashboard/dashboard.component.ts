@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ParticipanteService } from '../participante/participante.service';
+import { ParticipanteService } from '../components/participante/participante.service';
 import { SharingDataService } from '../service/sharing-data.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../service/auth.service';

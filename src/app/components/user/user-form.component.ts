@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { User } from './user';
 import { ActivatedRoute } from '@angular/router';
-import { SharingDataService } from '../service/sharing-data.service';
-import { UserService } from '../service/user.service';
+import { SharingDataService } from '../../service/sharing-data.service';
+import { UserService } from '../../service/user.service';
 
 @Component({
   selector: 'user-form',

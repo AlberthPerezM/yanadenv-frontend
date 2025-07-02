@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from './user';
 import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
-import { UserService } from '../service/user.service';
-import { SharingDataService } from '../service/sharing-data.service';
-import { AuthService } from '../service/auth.service';
+import { UserService } from '../../service/user.service';
+import { SharingDataService } from '../../service/sharing-data.service';
+import { AuthService } from '../../service/auth.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -56,7 +56,7 @@ export class UserAppComponent implements OnInit {
           
           this.authService.token = token;
           this.authService.user = login;
-          this.router.navigate(['/users']);
+          this.router.navigate(['/']);
         },
         error: error => {
           if (error.status == 401) {

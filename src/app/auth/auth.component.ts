@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { User } from '../user/user';
+import { User } from '../components/user/user';
 import Swal from 'sweetalert2';
 import { SharingDataService } from '../service/sharing-data.service';
 import { AuthService } from '../service/auth.service';
