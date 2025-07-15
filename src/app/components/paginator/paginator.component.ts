@@ -5,8 +5,7 @@ import { RouterModule } from '@angular/router';
   selector: 'paginator',
   standalone: true,
   imports: [RouterModule],
-  templateUrl: './paginator.component.html',
-
+  templateUrl: './paginator.component.html'
 })
 export class PaginatorComponent {
 

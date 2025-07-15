@@ -5,14 +5,16 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { Centro } from './centro';
 import { Nivel } from './nivel';
+import { BACKEND_URL } from '../../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CentroService {
-  private urlEndPoint: string = 'http://localhost:8080/api/centros';
-  private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+  //private urlEndPoint: string = 'http://localhost:8080/api/centros';
+  private urlEndPoint: string = BACKEND_URL + '/api/centros';
 
+  private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient ,  private router: Router) { }
    

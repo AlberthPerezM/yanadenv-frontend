@@ -4,13 +4,17 @@ import { Observable, map, catchError, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { DatoClinico } from './dato-cliente';
+import { BACKEND_URL } from '../../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatoClinicoService {
 
-  private urlEndPoint: string = 'http://localhost:8080/api/datosclinicos';
+  //private urlEndPoint: string = 'http://localhost:8080/api/datosclinicos';
+  
+  private urlEndPoint: string = BACKEND_URL + '/api/datosclinicos';
+
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient, private router: Router) {}

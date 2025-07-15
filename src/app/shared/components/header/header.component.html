@@ -3,18 +3,22 @@
   <button class="menu-toggle d-md-none" (click)="toggleSidebar()">
     <i class="fas fa-bars"></i>
   </button>
-  
+
   <div class="header-title">
     <span>Principal</span>
     <h2>Dashboard</h2>
   </div>
-  
+
   <div class="user-info">
-    <div class="search-box">
-      <i class="fa-solid fa-search"></i>
-      <input type="text" placeholder="Buscar" class="form-control">
-    </div>
-    <img src="/image/img.jpg" alt="User" class="ms-3">
+    <span class="nav-item nav-link text-primary mx-3">
+      @if(login.isAuth){
+      {{ login.user.username }}
+      <button (click)="handlerLogout()" class="btn btn-outline-success">
+        Logout
+      </button>
+      } @else {
+      <a class="btn btn-outline-primary" [routerLink]="['/login']">Sign In</a>
+      }
+    </span>
   </div>
-  
 </div>

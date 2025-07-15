@@ -5,12 +5,15 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { ExamenLaboratorio } from './examen-laboratorio';
 import { ParticipanteService } from '../participante/participante.service';
+import { BACKEND_URL } from '../../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExamenLaboratorioService {
-  private urlEndPoint: string = 'http://localhost:8080/api/examenes';
+  //private urlEndPoint: string = 'http://localhost:8080/api/examenes';
+  private urlEndPoint: string = BACKEND_URL + '/api/examenes';
+
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
   
   // Variable para seguimiento de operaciones en progreso

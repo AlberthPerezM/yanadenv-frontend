@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ParticipanteService } from '../components/participante/participante.service';
-import { SharingDataService } from '../service/sharing-data.service';
 import { Router } from '@angular/router';
-import { AuthService } from '../service/auth.service';
 import Swal from 'sweetalert2';
+import { ParticipanteService } from '../../../components/participante/participante.service';
+import { SharingDataService } from '../../../core/service/sharing-data.service';
+import { AuthService } from '../../../core/service/auth.service';
 
 @Component({
   selector: 'app-dashboard',

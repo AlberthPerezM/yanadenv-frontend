@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { LayoutComponent } from './shared/components/layout/layout.component';
 import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 import { HeaderComponent } from './shared/components/header/header.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { ParticipantesComponent } from './components/participante/participante.component';
 import { FormParticipanteComponent } from './components/participante/formParticipante.component';
@@ -18,8 +17,10 @@ import { FormDatoClinicoComponent } from './components/dato-clinico/form-dato-cl
 
 import { UserComponent } from './components/user/user.component';
 import { UserFormComponent } from './components/user/user-form.component';
-import { AuthComponent } from './auth/auth.component';
-import { authGuard } from './guards/auth.guard';
+import { AuthComponent } from './components/auth/auth.component';
+import { Forbidden403Component } from './components/forbidden403/forbidden403.component';
+import { authGuard } from './core/guards/auth.guard';
+import { DashboardComponent } from './shared/components/dashboard/dashboard.component';
 
 export const routes: Routes = [
   {
@@ -59,7 +60,9 @@ export const routes: Routes = [
       { path: 'users/edit/:id', component: UserFormComponent, canActivate: [authGuard] },
 
       // Login
-      { path: 'login', component: AuthComponent }
+      { path: 'login', component: AuthComponent },
+      { path: 'forbidden',component: Forbidden403Component}
+
     ]
   },
 

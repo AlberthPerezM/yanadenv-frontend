@@ -1,6 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { User } from '../components/user/user';
-
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +7,6 @@ import { User } from '../components/user/user';
 export class SharingDataService {
 
   private _newUserEventEmitter: EventEmitter<User> = new EventEmitter();
-
 
   private _idUserEventEmitter = new EventEmitter();
 

@@ -5,12 +5,17 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { Apoderado } from './apoderado';
 import { Participante } from '../participante/participante';
+import { BACKEND_URL } from '../../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApoderadoService {
-  private urlEndPoint: string = 'http://localhost:8080/api/apoderados';
+
+  //private urlEndPoint: string = 'http://localhost:8080/api/apoderados';
+  //BACKEND_URL + '/login';
+  private urlEndPoint: string = BACKEND_URL + '/api/apoderados';
+
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient, private router: Router) { }
