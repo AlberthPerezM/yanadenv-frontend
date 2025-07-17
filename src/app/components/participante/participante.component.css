@@ -8,7 +8,7 @@
   }
   
   .main-title {
-    color: #0d6efd;
+    color:var(--color-azul);
     font-weight: 600;
     margin: 0;
   }

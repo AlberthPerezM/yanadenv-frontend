@@ -1,28 +1,47 @@
-<div class="card">
-    <div class="card-header">
-        <h5 class="card-title">Login Page</h5>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <div class="logo-circle">
+        <img src="/adn.png" alt="Yanadenv Logo">
+      </div>
+      <h2>Login</h2>
+      <form (ngSubmit)="onSubmit()">
+        <div class="input-box">
+          <input
+            type="text"
+            name="username"
+            required
+            [(ngModel)]="user.username"
+          />
+          <label>Username</label>
+        </div>
+        <div class="input-box">
+          <input
+            type="password"
+            name="password"
+            required
+            [(ngModel)]="user.password"
+          />
+          <label>Password</label>
+        </div>
+        <button type="submit" class="btn">Login</button>
+      </form>
+      
+      <!-- Contenedor para las tres imágenes circulares -->
+      <div class="circle-images-container">
+        <div class="circle-image">
+          <img src="/uch.png" alt="Imagen 1">
+        </div>
+        <div class="circle-image">
+          <img src="/cayetano.png" alt="Imagen 2">
+        </div>
+        <div class="circle-image">
+          <img src="/concytec.png" alt="Imagen 3">
+        </div>
+         <div class="circle-image">
+          <img src="/prociencia.png" alt="Imagen 3">
+        </div>
+      </div>
     </div>
-
-    <div class="card-body">
-        <form (ngSubmit)="onSubmit()">
-            <input 
-            name="username" 
-            class="form-control my-2 w-25"
-            placeholder="Username" 
-            [(ngModel)]="user.username">
-
-            <input 
-            name="password" 
-            class="form-control my-2 w-25" 
-            type="password" 
-            placeholder="Password"
-            [(ngModel)]="user.password">
-
-            <button 
-            class="btn btn-primary" 
-            type="submit">
-                Login
-            </button>
-        </form>
-    </div>
-</div>
+  </div>
+</body>

@@ -1,0 +1,152 @@
+/* Estilos generales */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #c8edf8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Contenedor principal */
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+}
+
+/* Caja de login */
+.login-box {
+  background:var(--color-azul);
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
+  position: relative;
+  text-align: center;
+  border: 2px solid #0ef;
+
+}
+
+/* Logo circular */
+.logo-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: white;
+  margin: -70px auto 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid #0ef;
+  box-shadow: 0 0 15px rgba(0, 238, 255, 0.5);
+}
+
+.logo-circle img {
+    border-radius: 50%;
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
+
+/* Título */
+h2 {
+  color: #0ef;
+  margin-bottom: 30px;
+  font-size: 2em;
+}
+
+/* Campos de entrada */
+.input-box {
+  position: relative;
+  margin: 25px 0;
+}
+
+.input-box input {
+  width: 100%;
+  padding: 10px 20px;
+  background: transparent;
+  border: 2px solid #2c4766;
+  border-radius: 40px;
+  font-size: 1em;
+  color: white;
+  outline: none;
+  transition: 0.5s;
+}
+
+.input-box input:focus,
+.input-box input:valid {
+  border-color: #0ef;
+}
+
+.input-box label {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  color: white;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+  top: 1px;
+  font-size: 0.8em;
+  background: #0c1622;
+  padding: 0 6px;
+  color: #0ef;
+}
+
+/* Botón */
+.btn {
+  width: 100%;
+  padding: 12px;
+  background: #0ef;
+  border: none;
+  border-radius: 40px;
+  font-size: 1em;
+  font-weight: 600;
+  color: #1f293a;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-bottom: 20px;
+}
+
+.btn:hover {
+  background: #08c;
+  color: white;
+  box-shadow: 0 0 15px rgba(0, 238, 255, 0.5);
+}
+
+/* Contenedor de imágenes circulares */
+.circle-images-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.circle-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #0ef;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.circle-image:hover {
+  transform: scale(1.1);
+}
+
+.circle-image img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}

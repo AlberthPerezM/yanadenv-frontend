@@ -9,7 +9,8 @@ import { login } from '../../store/auth/auth.actions';
   selector: 'app-auth',
   standalone: true,
   imports: [FormsModule],
-  templateUrl: './auth.component.html'
+  templateUrl: './auth.component.html',
+  styleUrls: ['./auth.component.css'] 
 })
 export class AuthComponent {
 

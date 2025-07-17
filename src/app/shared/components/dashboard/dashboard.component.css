@@ -7,7 +7,7 @@
 }
 
 .main-title {
-  color: rgba(113, 99, 186, 1);
+  color: var(--color-azul);
   margin-bottom: 20px;
   font-size: 18px;
   font-weight: 600;

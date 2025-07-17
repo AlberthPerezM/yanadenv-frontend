@@ -1,24 +1,18 @@
 <div class="header-wrapper">
-  <!-- Botón de toggle solo visible en móviles -->
-  <button class="menu-toggle d-md-none" (click)="toggleSidebar()">
+  <button class="menu-toggle d-md-none" type="button" aria-label="Open sidebar" (click)="toggleSidebar()">
     <i class="fas fa-bars"></i>
   </button>
-
   <div class="header-title">
-    <span>Principal</span>
-    <h2>Dashboard</h2>
+    <span class="logo-text fw-bold">YANADENV</span>
   </div>
-
   <div class="user-info">
-    <span class="nav-item nav-link text-primary mx-3">
-      @if(login.isAuth){
-      {{ login.user.username }}
-      <button (click)="handlerLogout()" class="btn btn-outline-success">
-        Logout
-      </button>
-      } @else {
-      <a class="btn btn-outline-primary" [routerLink]="['/login']">Sign In</a>
-      }
-    </span>
+    @if(login.isAuth) {
+      <span class="nav-item nav-link text-primary mx-3">
+        {{ login.user.username| uppercase  }}
+        <button (click)="handlerLogout()" class="btn btn-danger ms-2" type="button">Logout</button>
+      </span>
+    } @else {
+      <a class="btn btn-primary" [routerLink]="['/login']">Sign In</a>
+    }
   </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../../core/service/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,7 +13,12 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 export class SidebarComponent {
   @Input() isOpen = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService
+
+  
+  ) {}
 
   // Método para verificar si la ruta está activa
   isRouteActive(route: string): boolean {
@@ -23,12 +29,9 @@ export class SidebarComponent {
       matrixParams: 'ignored'
     });
   }
-
-  // Método para cerrar sesión
-  logout() {
-    // Implementar lógica de logout aquí
-    console.log('Cerrando sesión...');
-    // this.authService.logout();
-    // this.router.navigate(['/login']);
+ handlerLogout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
+
 }

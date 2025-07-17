@@ -13,15 +13,18 @@ export class AuthService {
   private url: string = BACKEND_URL + '/login';
   private _user: any;
 
-  constructor(
-    private store: Store<{ auth: any }>,
-    private http: HttpClient
-  ) {
-    // Escucha los cambios del store y guarda en _user
-    this.store.select('auth').subscribe(state => {
-      this._user = state;
-    });
-  }
+constructor(
+  private store: Store<{ auth: any }>,
+  private http: HttpClient
+) {
+  // Escucha los cambios del store y guarda en _user
+  this.store.select('auth').subscribe(state => {
+    this._user = state;
+
+    // 🧠 Guarda el estado en sessionStorage automáticamente
+    sessionStorage.setItem('login', JSON.stringify(state));
+  });
+}
 
   // 🔐 Enviar login al backend
 
@@ -79,7 +82,7 @@ export class AuthService {
   isAdmin(): boolean {
     return this.user?.isAdmin ?? false;
   }
-
+ 
   // 🚪 Cierra sesión
   logout() {
     this.store.dispatch(logout());
