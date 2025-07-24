@@ -39,24 +39,24 @@
 @media (max-width: 768px) {
   .header-wrapper {
     flex-direction: column;
-    align-items: center;      /* Centra el contenido horizontalmente */
-    padding: 15px;            /* Puedes aumentar el padding para más espacio */
+    align-items: center;      
+    padding: 15px;            
     text-align: center;
   }
   .header-title {
     margin-bottom: 10px;
-    justify-content: center;  /* Centra el contenido dentro del flex */
+    justify-content: center; 
     width: 100%;
   }
   .user-info {
     flex-direction: column;
     gap: 10px;
-    align-items: center;      /* Esto centra los elementos del usuario */
+    align-items: center;      
     margin-top: 10px;
     width: 100%;
   }
   .menu-toggle {
-    align-self: center;       /* Centra el botón hamburguesa */
+    align-self: center;       
     margin-bottom: 8px;
     margin-right: 0;
   }

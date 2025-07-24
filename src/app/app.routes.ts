@@ -20,6 +20,7 @@ import { Forbidden403Component } from './components/forbidden403/forbidden403.co
 
 import { DashboardComponent } from './shared/components/dashboard/dashboard.component';
 import { authGuard } from './core/guards/auth.guard';
+import { LocalizacionSelectorComponent } from './components/selector-localizacion/selector-localizacion.component';
 
 export const routes: Routes = [
 
@@ -63,7 +64,11 @@ export const routes: Routes = [
       { path: 'users', component: UserComponent },
       { path: 'users/page/:page', component: UserComponent },
       { path: 'users/create', component: UserFormComponent },
-      { path: 'users/edit/:id', component: UserFormComponent }
+      { path: 'users/edit/:id', component: UserFormComponent },
+
+      //Localización
+            { path: 'localizaciones', component: LocalizacionSelectorComponent }
+
     ]
   },
 

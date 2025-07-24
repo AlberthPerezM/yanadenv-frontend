@@ -68,4 +68,17 @@ export class DatoClinicoService {
       })
     );
   }
+
+ //Contador de datos clinicos
+  // Contar datos clínicos registrados
+countDatosClinicos(): Observable<number> {
+  return this.http.get<number>(`${this.urlEndPoint}/count`).pipe(
+    catchError(e => {
+      console.error('Error al contar los datos clínicos:', e);
+      Swal.fire('Error al contar los datos clínicos', e.message, 'error');
+      return throwError(e);
+    })
+  );
+}
+
 }
