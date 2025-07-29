@@ -18,12 +18,11 @@
   <h3 class="main-title">Resumen de datos</h3>
   <div class="row g-3">
     <div class="col-md-6 col-lg-3">
-      <div class="metric-card">
+      <div class="metric-card light-blue">
         <div class="card-header">
           <div class="data">
             <span class="label">Participantes</span>
             <span class="value">{{participantesCount}}</span>
-
           </div>
           <div class="icon-wrapper bg-danger">
             <i class="fas fa-chart-line"></i>
@@ -34,14 +33,15 @@
     </div>
 
     <div class="col-md-6 col-lg-3">
-      <div class="metric-card light-purple">
+      <div class="metric-card light-blue">
         <div class="card-header">
           <div class="data">
-            <span class="label">Métrica 2</span>
-            <span class="value">{{loadDatosClinicosCount}}()</span>
+            <span class="label">Centros</span>
+            <span class="value">{{centrosCount}}</span>
           </div>
           <div class="icon-wrapper bg-purple">
-            <i class="fas fa-list"></i>
+            <i class="fas fa-hospital"></i>
+
           </div>
         </div>
         <span class="card-detail">Última actualización: hoy</span>
@@ -49,14 +49,15 @@
     </div>
 
     <div class="col-md-6 col-lg-3">
-      <div class="metric-card light-green">
+      <div class="metric-card light-blue">
         <div class="card-header">
           <div class="data">
-            <span class="label">Métrica 3</span>
-            <span class="value">300</span>
+            <span class="label">Campañas</span>
+            <span class="value"></span>
           </div>
           <div class="icon-wrapper bg-success">
-            <i class="fas fa-check-circle"></i>
+            <i class="fas fa-heartbeat"></i>
+
           </div>
         </div>
         <span class="card-detail">Última actualización: ayer</span>
@@ -67,11 +68,12 @@
       <div class="metric-card light-blue">
         <div class="card-header">
           <div class="data">
-            <span class="label">Métrica 4</span>
-            <span class="value">200</span>
+            <span class="label">Datos clinicos</span>
+            <span class="value">{{datosClinicosCount}}</span>
           </div>
           <div class="icon-wrapper bg-primary">
-            <i class="fas fa-users"></i>
+            <i class="fas fa-notes-medical"></i> 
+
           </div>
         </div>
         <span class="card-detail">Última actualización: ayer</span>

@@ -9,6 +9,7 @@ import { BACKEND_URL } from '../../config/config';
 import { Region } from '../models/region';
 import { Provincia } from '../models/provincia';
 import { Distrito } from '../models/distrito';
+import { Centro } from '../models/centro';
 @Injectable({
   providedIn: 'root'
 })
@@ -52,5 +53,14 @@ export class LocalizacionService {
       })
     );
   }
-
+ getCentrosPorDistrito(idDist: number): Observable<Centro[]> {
+    return this.http.get<Centro[]>(`${this.urlEndPoint}/distritos/${idDist}/centros`).pipe(
+      map(response => response as Centro[]),
+      catchError(e => {
+        console.error('Error al cargar los centros', e);
+        Swal.fire('Error', 'No se pudieron cargar los centros', 'error');
+        return throwError(() => e);
+      })
+    );
+  }
 }

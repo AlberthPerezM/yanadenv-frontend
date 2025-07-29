@@ -79,12 +79,20 @@
 }
 
 .light-blue {
-  background: #ececfe;
+  background: #cff0fc;
+}
+.light-sky {
+  background: #e6faff;
 }
 
 .bg-purple {
   background-color: purple;
 }
+.bg-blue {
+  background:rgb(22, 22, 114);
+}
+
+
 @media (max-width: 768px) {
   .card-container {
     padding: 10px;

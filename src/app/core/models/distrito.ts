@@ -1,3 +1,4 @@
+import { Centro } from "./centro";
 import { Provincia } from "./provincia";
 
 export class Distrito {
@@ -5,7 +6,5 @@ export class Distrito {
   habilitadoDist?: boolean;
   nombreDist?: string | null;
   provincia?: Provincia;
-
-  // Si necesitas manejar la lista centros en el futuro, descomenta y define la clase Centro
-  // centros: Centro[];
+  centros?: Centro[];
 }

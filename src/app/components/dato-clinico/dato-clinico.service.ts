@@ -7,12 +7,11 @@ import { DatoClinico } from './dato-cliente';
 import { BACKEND_URL } from '../../config/config';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DatoClinicoService {
-
   //private urlEndPoint: string = 'http://localhost:8080/api/datosclinicos';
-  
+
   private urlEndPoint: string = BACKEND_URL + '/api/datosclinicos';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -21,26 +20,30 @@ export class DatoClinicoService {
 
   // Listar todos los datos clínicos
   getDatosClinicos(): Observable<DatoClinico[]> {
-    return this.http.get(this.urlEndPoint).pipe(
-      map(response => response as DatoClinico[])
-    );
+    return this.http
+      .get(this.urlEndPoint)
+      .pipe(map((response) => response as DatoClinico[]));
   }
 
   // Crear nuevo dato clínico
   create(datoClinico: DatoClinico): Observable<any> {
-    return this.http.post<DatoClinico>(this.urlEndPoint, datoClinico, { headers: this.httpHeaders }).pipe(
-      catchError(e => {
-        console.error(e.error.mensaje);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
-        return throwError(e);
+    return this.http
+      .post<DatoClinico>(this.urlEndPoint, datoClinico, {
+        headers: this.httpHeaders,
       })
-    );
+      .pipe(
+        catchError((e) => {
+          console.error(e.error.mensaje);
+          Swal.fire(e.error.mensaje, e.error.error, 'error');
+          return throwError(e);
+        })
+      );
   }
 
   // Obtener dato clínico por ID
   getDatoClinico(id: number): Observable<DatoClinico> {
     return this.http.get<DatoClinico>(`${this.urlEndPoint}/${id}`).pipe(
-      catchError(e => {
+      catchError((e) => {
         this.router.navigate(['/datosclinicos']);
         console.error(e.error.mensaje);
         Swal.fire(e.error.mensaje, e.error.error, 'error');
@@ -60,25 +63,22 @@ export class DatoClinicoService {
 
   // Eliminar un dato clínico
   delete(id: number): Observable<DatoClinico> {
-    return this.http.delete<DatoClinico>(`${this.urlEndPoint}/${id}`, { headers: this.httpHeaders }).pipe(
-      catchError(e => {
-        console.error(e.error.mensaje);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
-        return throwError(e);
+    return this.http
+      .delete<DatoClinico>(`${this.urlEndPoint}/${id}`, {
+        headers: this.httpHeaders,
       })
-    );
+      .pipe(
+        catchError((e) => {
+          console.error(e.error.mensaje);
+          Swal.fire(e.error.mensaje, e.error.error, 'error');
+          return throwError(e);
+        })
+      );
   }
 
- //Contador de datos clinicos
+  //Contador de datos clinicos
   // Contar datos clínicos registrados
-countDatosClinicos(): Observable<number> {
-  return this.http.get<number>(`${this.urlEndPoint}/count`).pipe(
-    catchError(e => {
-      console.error('Error al contar los datos clínicos:', e);
-      Swal.fire('Error al contar los datos clínicos', e.message, 'error');
-      return throwError(e);
-    })
-  );
-}
-
+  countDatosClinicos(): Observable<number> {
+    return this.http.get<number>(`${this.urlEndPoint}/count`);
+  }
 }
