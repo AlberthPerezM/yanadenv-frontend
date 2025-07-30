@@ -1,7 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 /* styles.css */
 :root {
-  --color-azul:#05054d;
+  --color-azul: #090977;
   --color-secundario: #2ecc71;
   --color-texto: #333333;
+  --color-fondo: #f8f9fa;
+}
+
+/* styles.scss o styles.css */
+
+.card-header-azul {
+  background-color: var(--color-azul) !important;
+  color: white;
+  text-align: center;
+  font-size: 0.8rem;
 }

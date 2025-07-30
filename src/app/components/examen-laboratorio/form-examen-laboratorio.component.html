@@ -1,106 +1,85 @@
 <div class="card border-0 shadow-lg">
-  <div class="card-header bg-primary text-white fw-bold fs-5">
+  <div class="card-header card-header-azul fw-bold">
     {{ titulo }}
   </div>
+  <ul class="nav nav-tabs mb-4 justify-content-center border-bottom">
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/participantes/form', participante.idPar]" routerLinkActive="active"
+        #rlaParticipante="routerLinkActive" [class.disabled]="rlaParticipante.isActive"
+        (click)="rlaParticipante.isActive && $event.preventDefault()">
+        Participante
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/examenes/form', participante.idPar]" routerLinkActive="active"
+        #rlaExamenes="routerLinkActive" [class.disabled]="rlaExamenes.isActive"
+        (click)="rlaExamenes.isActive && $event.preventDefault()">
+        Exámenes
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/datoclinicos/form', participante.idPar]" routerLinkActive="active"
+        #rlaDatosClinicos="routerLinkActive" [class.disabled]="rlaDatosClinicos.isActive"
+        (click)="rlaDatosClinicos.isActive && $event.preventDefault()">
+        Datos clínicos
+      </a>
+    </li>
+
+
+  </ul>
   <div class="card-body bg-light">
     <form class="row g-3">
-
-      <!-- Mostrar el ID del participante -->
-      <div class="col-12">
-        <p><strong>ID del Participante:</strong> {{ participante?.idPar || 'No definido' }}</p>
+      <div class="col-12 mb-3">
+        <p><strong>Participante</strong> {{ participante?.nombre + ' ' + participante.apellidoPaterno +' ' +
+          participante.apellidoMaterno }}</p>
       </div>
-      <div class="col-12">
-        <p><strong>Nombre:</strong> {{ participante?.nombre || 'No definido' }}</p>
-      </div>
-      <!-- Lista dinámica de exámenes -->
-      <div *ngFor="let examen of examenes; let i = index" class="card mb-3">
-        <div class="card-body">
-          <h5 class="card-title">Examen {{ i + 1 }}</h5>
 
-          <!-- Selección de examen con lista desplegable -->
-          <div class="col-md-6">
-            <label for="nombreExa-{{ i }}" class="form-label">Nombre</label>
-            <input
-              type="text"
-              class="form-control"
-              [(ngModel)]="examen.nombreExa"
-              name="nombreExa-{{ i }}"
-              list="listaExamenes"
-              required
-            />
-            <datalist id="listaExamenes">
-              <option *ngFor="let opcion of examenesDisponibles" [value]="opcion"></option>
-            </datalist>
-          </div>
+      <div class="row">
+        <div *ngFor="let examen of examenes; let i = index"
+          class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4 d-flex align-items-stretch">
+          <div class="card shadow-sm h-100 w-100">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title mb-3">Examen {{ i + 1 }}</h5>
 
-          <!-- Resultado del examen -->
-          <div class="col-md-6">
-            <label class="form-label d-block">Resultado</label>
-            <div class="form-check form-check-inline">
-              <input
-                type="radio"
-                id="positivo-{{ i }}"
-                name="resultado-{{ i }}"
-                [(ngModel)]="examen.examenResultado"
-                value="Positivo"
-                class="form-check-input"
-              />
-              <label for="positivo-{{ i }}" class="form-check-label">Positivo</label>
+              <div class="mb-3">
+                <label for="nombreExa-{{ i }}" class="form-label">Nombre</label>
+                <input type="text" class="form-control" [(ngModel)]="examen.nombreExa" name="nombreExa-{{ i }}"
+                  list="listaExamenes" required />
+                <datalist id="listaExamenes">
+                  <option *ngFor="let opcion of examenesDisponibles" [value]="opcion"></option>
+                </datalist>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label d-block">Resultado</label>
+                <div class="form-check form-check-inline" *ngFor="let res of ['Positivo','Negativo','No se sabe']">
+                  <input type="radio" id="{{ res.toLowerCase() }}-{{ i }}" name="resultado-{{ i }}"
+                    [(ngModel)]="examen.examenResultado" [value]="res" class="form-check-input" />
+                  <label for="{{ res.toLowerCase() }}-{{ i }}" class="form-check-label">{{ res }}</label>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="fechaResultado-{{ i }}" class="form-label">Fecha</label>
+                <input type="date" class="form-control" [(ngModel)]="examen.fechaResultado"
+                  name="fechaResultado-{{ i }}" required />
+              </div>
+
+              <div class="mt-auto text-end">
+                <button type="button" class="btn btn-danger btn-sm" (click)="eliminarExamen(i)">
+                  Eliminar Examen
+                </button>
+              </div>
             </div>
-            <div class="form-check form-check-inline">
-              <input
-                type="radio"
-                id="negativo-{{ i }}"
-                name="resultado-{{ i }}"
-                [(ngModel)]="examen.examenResultado"
-                value="Negativo"
-                class="form-check-input"
-              />
-              <label for="negativo-{{ i }}" class="form-check-label">Negativo</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input
-                type="radio"
-                id="noSeSabe-{{ i }}"
-                name="resultado-{{ i }}"
-                [(ngModel)]="examen.examenResultado"
-                value="No se sabe"
-                class="form-check-input"
-              />
-              <label for="noSeSabe-{{ i }}" class="form-check-label">No se sabe</label>
-            </div>
-          </div>
-
-          <!-- Fecha del resultado -->
-          <div class="col-md-6">
-            <label for="fechaResultado-{{ i }}" class="form-label">Fecha</label>
-            <input
-              type="date"
-              class="form-control"
-              [(ngModel)]="examen.fechaResultado"
-              name="fechaResultado-{{ i }}"
-              required
-            />
-          </div>
-
-          <!-- Botón para eliminar examen -->
-          <div class="col-12 d-flex justify-content-end mt-2">
-            <button type="button" class="btn btn-danger" (click)="eliminarExamen(i)">Eliminar Examen</button>
           </div>
         </div>
       </div>
 
-      <!-- Botones para agregar exámenes y guardarlos -->
-      <div class="col-12 d-flex justify-content-end mt-4">
-        <button type="button" class="btn btn-primary me-2" (click)="agregarExamen()">Agregar Examen</button>
-        <button
-          type="button"
-          class="btn btn-success"
-          (click)="guardarExamenes()"
-          [disabled]="!participante?.idPar || examenes.length === 0"
-        >
-          Guardar Exámenes
-        </button>
+      <div class="col-12 d-flex justify-content-end mt-3">
+        <button type="button" class="btn btn-info me-2" (click)="agregarExamen()">Agregar Examen</button>
+        <button type="button" class="btn btn-primary" (click)="guardarExamenes()"
+          [disabled]="!participante?.idPar || examenes.length === 0">Guardar Exámenes</button>
       </div>
     </form>
   </div>

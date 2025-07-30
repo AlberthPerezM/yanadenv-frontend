@@ -7,19 +7,19 @@
       <!-- Nombre -->
       <div class="col-md-6">
         <label for="nombre" class="form-label">Nombre</label>
-        <input type="text" class="form-control" [(ngModel)]="apoderado.nombre" name="nombre">
+        <input type="text" class="form-control" [(ngModel)]="apoderado.nombre" name="nombre" />
       </div>
 
       <!-- Apellido Paterno -->
       <div class="col-md-6">
         <label for="apellidoPaterno" class="form-label">Apellido Paterno</label>
-        <input type="text" class="form-control" [(ngModel)]="apoderado.apellidoPaterno" name="apellidoPaterno">
+        <input type="text" class="form-control" [(ngModel)]="apoderado.apellidoPaterno" name="apellidoPaterno" />
       </div>
 
       <!-- Apellido Materno -->
       <div class="col-md-6">
         <label for="apellidoMaterno" class="form-label">Apellido Materno</label>
-        <input type="text" class="form-control" [(ngModel)]="apoderado.apellidoMaterno" name="apellidoMaterno">
+        <input type="text" class="form-control" [(ngModel)]="apoderado.apellidoMaterno" name="apellidoMaterno" />
       </div>
 
       <!-- Sexo -->
@@ -43,29 +43,25 @@
       <!-- Número de Documento -->
       <div class="col-md-6">
         <label for="numeroDocumento" class="form-label">Número de Documento</label>
-        <input type="text" class="form-control" [(ngModel)]="apoderado.numeroDocumento" name="numeroDocumento">
+        <input type="text" class="form-control" [(ngModel)]="apoderado.numeroDocumento" name="numeroDocumento" />
       </div>
 
       <!-- Edad -->
       <div class="col-md-6">
         <label for="edad" class="form-label">Edad</label>
-        <input type="number" class="form-control" [(ngModel)]="apoderado.edad" name="edad">
+        <input type="number" class="form-control" [(ngModel)]="apoderado.edad" name="edad" />
       </div>
 
       <!-- Participante -->
       <div class="col-md-6">
         <label for="nivel" class="form-label">Participante</label>
-        <select [compareWith]="compararParticipante" class="form-select" [(ngModel)]="apoderado.participante" name="nivel" [disabled]="true">
+        <select [compareWith]="compararParticipante" class="form-select" [(ngModel)]="apoderado.participante"
+          name="nivel" [disabled]="true">
           <option [ngValue]="undefined">--- Seleccionar ---</option>
-          <option *ngFor="let participante of participantes" [ngValue]="participante">{{ participante.nombre }}</option>
+          <option *ngFor="let participante of participantes" [ngValue]="participante">
+            {{ participante.nombre + ' ' + participante.apellidoPaterno + ' ' + participante.apellidoMaterno }}
+          </option>
         </select>
-      </div>
-
-      <div class="col-12">
-        <p>ID AQUI DEBE RECIBIR EL PARAMETRO</p>
-        <div *ngIf="idParticipante">
-          <p>Participante relacionado: {{ idParticipante }}</p>
-        </div>
       </div>
 
       <!-- Botón Guardar -->

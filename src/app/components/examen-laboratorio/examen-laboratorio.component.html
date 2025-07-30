@@ -1,36 +1,36 @@
 <div class="card border-primary mb-3">
-    <div class="card-header bg-primary text-white">
-      Exámenes de Laboratorio
-    </div>
-    <div class="card-body">
-      <h5 class="card-title text-primary">Listado de Exámenes</h5>
-      <div class="my-2 text-left">
-        <button [routerLink]="['/examenes/form']" class="btn btn-success">Crear Examen</button>
-      </div>
-      <table class="table table-responsive table-bordered table-striped table-hover">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Resultado</th>
-            <th scope="col">Fecha de Resultado</th>
-            <th scope="col">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let examen of examenes" class="align-middle">
-            <td>{{ examen.idExa }}</td>
-            <td>{{ examen.nombreExa }}</td>
-            <td>{{ examen.examenResultado }}</td>
-            <td>{{ examen.fechaResultado | date: 'dd/MM/yyyy' : 'UTC' }}</td>
-
-            <td>
-              <button type="button" [routerLink]="['/examenes/form', examen.idExa]" class="btn btn-primary">Editar</button>
-              <button type="button" (click)='delete(examen)' class="btn btn-danger btn-sm">Eliminar</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="card-header bg-primary text-white">
+    Exámenes de Laboratorio
   </div>
-  
+  <div class="card-body">
+    <h5 class="card-title text-primary">Listado de Exámenes</h5>
+    <div class="my-2 text-left">
+      <button [routerLink]="['/examenes/form']" class="btn btn-success">Crear Examen</button>
+    </div>
+    <table class="table table-responsive table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Resultado</th>
+          <th scope="col">Fecha de Resultado</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let examen of examenes" class="align-middle">
+          <td>{{ examen.idExa }}</td>
+          <td>{{ examen.nombreExa }}</td>
+          <td>{{ examen.examenResultado }}</td>
+          <td>{{ examen.fechaResultado | date: 'dd/MM/yyyy' : 'UTC' }}</td>
+
+          <td>
+            <button type="button" [routerLink]="['/examenes/form', examen.idExa]"
+              class="btn btn-primary">Editar</button>
+            <button type="button" (click)='delete(examen)' class="btn btn-danger btn-sm">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

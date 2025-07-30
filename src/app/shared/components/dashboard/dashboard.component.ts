@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { ParticipanteService } from '../../../components/participante/participante.service';
-import { DatoClinicoService } from '../../../components/dato-clinico/dato-clinico.service'; // Asegúrate de tener esta ruta correcta
+import { ParticipanteService } from '../../../core/service/participante.service';
+import { DatoClinicoService } from '../../../core/service/dato-clinico.service'; // Asegúrate de tener esta ruta correcta
 import { SharingDataService } from '../../../core/service/sharing-data.service';
 import { AuthService } from '../../../core/service/auth.service';
 import { CentroService } from '../../../core/service/centro.service';

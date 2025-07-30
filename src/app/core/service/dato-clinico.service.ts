@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, map, catchError, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { DatoClinico } from './dato-cliente';
+import { DatoClinico } from '../models/dato-clinico';
 import { BACKEND_URL } from '../../config/config';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class DatoClinicoService {
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   // Listar todos los datos clínicos
   getDatosClinicos(): Observable<DatoClinico[]> {
@@ -77,7 +77,6 @@ export class DatoClinicoService {
   }
 
   //Contador de datos clinicos
-  // Contar datos clínicos registrados
   countDatosClinicos(): Observable<number> {
     return this.http.get<number>(`${this.urlEndPoint}/count`);
   }

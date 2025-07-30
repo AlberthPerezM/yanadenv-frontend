@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { DatoClinico } from './dato-cliente';
-import { DatoClinicoService } from './dato-clinico.service';
+import { DatoClinico } from '../../core/models/dato-clinico';
+import { DatoClinicoService } from '../../core/service/dato-clinico.service';
 
 @Component({
   selector: 'app-form-datoclinico',

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Apoderado } from './apoderado';
-import { ApoderadoService } from './apoderado.service';
+import { ApoderadoService } from '../../core/service/apoderado.service';
 import { RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Apoderado } from '../../core/models/apoderado';
 
 @Component({
   selector: 'app-apoderado',

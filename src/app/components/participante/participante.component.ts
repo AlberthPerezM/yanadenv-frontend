@@ -1,8 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Participante } from './participante';
-import { ParticipanteService } from './participante.service';
+import { Participante } from '../../core/models/participante';
+import { ParticipanteService } from '../../core/service/participante.service';
 import { RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
 

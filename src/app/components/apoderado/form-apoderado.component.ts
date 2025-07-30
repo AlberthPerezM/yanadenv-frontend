@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ApoderadoService } from './apoderado.service';
+import { ApoderadoService } from '../../core/service/apoderado.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Apoderado } from './apoderado';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ParticipanteService } from '../participante/participante.service';
-import { Participante } from '../participante/participante';
+import { ParticipanteService } from '../../core/service/participante.service';
+import { Participante } from '../../core/models/participante';
+import { Apoderado } from '../../core/models/apoderado';
 
 @Component({
   selector: 'app-form-apoderado',
@@ -16,8 +16,8 @@ import { Participante } from '../participante/participante';
 })
 export class FormApoderadoComponent implements OnInit {
   public apoderado: Apoderado = new Apoderado();
-  public titulo: string = 'Crear Apoderado';
-  public participantes: Participante[] = []; // Lista de participantes disponibles
+  public titulo: string = 'Apoderado';
+  public participantes: Participante[] = [];
   idParticipante: number | null = null;
   nivelSeleccionado: any;
 
@@ -27,7 +27,7 @@ export class FormApoderadoComponent implements OnInit {
     private participanteService: ParticipanteService,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
 
 
   ngOnInit(): void {
@@ -38,31 +38,28 @@ export class FormApoderadoComponent implements OnInit {
       this.idParticipante = params['idParticipante'] ? Number(params['idParticipante']) : null;
       console.log("ID del participante recibido:", this.idParticipante);
     });
-  }    
+  }
+
   //Nivel seleccionado nos ayuda con los combobox
   participanteSeleccionado(): void {
     this.nivelSeleccionado = this.idParticipante !== undefined ? this.idParticipante : this.apoderado.participante;
   }
-
-    cargarParticipantes(): void {
-      this.participanteService.getParticipantes().subscribe((participantes) => {
-        this.participantes = participantes;
-    
-        // Si hay un idParticipante en la URL, buscar el participante correspondiente
-        if (this.idParticipante) {
-          const participanteEncontrado = this.participantes.find(p => p.idPar === this.idParticipante);
-          if (participanteEncontrado) {
-            this.apoderado.participante = participanteEncontrado;
-          }
+  cargarParticipantes(): void {
+    this.participanteService.getParticipantes().subscribe((participantes) => {
+      this.participantes = participantes;
+      // Si hay un idParticipante en la URL, buscar el participante correspondiente
+      if (this.idParticipante) {
+        const participanteEncontrado = this.participantes.find(p => p.idPar === this.idParticipante);
+        if (participanteEncontrado) {
+          this.apoderado.participante = participanteEncontrado;
         }
-    
-        // Si no hay un idParticipante o no se encontró, asignar el primer participante disponible
-        if (!this.apoderado.participante && this.participantes.length > 0) {
-          this.apoderado.participante = this.participantes[0]; // Toma el primero disponible
-        }
-      });
-    }
-    
+      }
+      // Si no hay un idParticipante o no se encontró, asignar el primer participante disponible
+      if (!this.apoderado.participante && this.participantes.length > 0) {
+        this.apoderado.participante = this.participantes[0]; // Toma el primero disponible
+      }
+    });
+  }
   // Crear apoderado
   create(): void {
     this.apoderadoService.create(this.apoderado).subscribe((json) => {
@@ -70,7 +67,6 @@ export class FormApoderadoComponent implements OnInit {
       Swal.fire('Nuevo Apoderado', `Apoderado creado: ${json.apoderado.nombre}`, 'success');
     });
   }
-
   // Cargar apoderado por ID
   public cargarApoderado(): void {
     this.activatedRoute.params.subscribe((params) => {
@@ -82,7 +78,6 @@ export class FormApoderadoComponent implements OnInit {
       }
     });
   }
- 
   // Actualizar apoderado
   public update(): void {
     this.apoderadoService.update(this.apoderado).subscribe((json) => {
@@ -90,7 +85,6 @@ export class FormApoderadoComponent implements OnInit {
       Swal.fire('Apoderado Actualizado', `Apoderado actualizado: ${json.apoderado.nombre}`, 'success');
     });
   }
-
   compararParticipante(o1: Participante | null, o2: Participante | null): boolean {
     return o1?.idPar === o2?.idPar;
   }

@@ -12,7 +12,10 @@
     font-weight: 600;
     margin: 0;
   }
-  
+  .color-azul {
+  background-color: var(--color-azul) !important;
+}
+
   /* Estilos de la tabla */
   .custom-table {
     width: 100%;

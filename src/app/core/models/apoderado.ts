@@ -1,4 +1,4 @@
-import { Participante } from "../participante/participante";
+import { Participante } from "./participante";
 
 export class Apoderado {
     idApo!: number;

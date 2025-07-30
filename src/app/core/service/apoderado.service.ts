@@ -3,9 +3,10 @@ import { map, Observable, of, catchError, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { Apoderado } from './apoderado';
-import { Participante } from '../participante/participante';
+
+import { Participante } from '../models/participante';
 import { BACKEND_URL } from '../../config/config';
+import { Apoderado } from '../models/apoderado';
 
 @Injectable({
   providedIn: 'root'

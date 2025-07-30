@@ -1,43 +1,62 @@
-<a
-  *ngIf="participante.edad < 18"
-  [routerLink]="apoderadoExistenteId ? ['/apoderados/form', apoderadoExistenteId] : ['/apoderados/form']"
-  [queryParams]="{ idParticipante: participante.idPar }"
-  class="btn btn-warning my-3">
-  {{ apoderadoExistenteId ? 'Editar Apoderado' : 'Registrar Apoderado' }}
-</a>
-
 <div class="card border-0 shadow-lg">
-  <div class="card-header bg-primary text-white fw-bold fs-5">
+  <div class="card-header card-header-azul fw-bold text-center">
     {{ titulo }}
   </div>
-  <div class="card-body bg-light">
-    <!-- Simulación de pestañas (solo visual) -->
-    <div class="d-flex mb-4 border-bottom pb-2">
-      <h6 class="me-4 fw-bold"  >Participante</h6>
 
-      <h6 class="me-4 fw-bold"  [routerLink]="['/examenes/form', participante.idPar]">Examenes</h6>
-      
-      <h6 class="text-muted"  [routerLink]="['/datoclinicos/form', participante.idPar]" >Datos clínicos</h6>
-    </div>
+  <ul class="nav nav-tabs mb-4 justify-content-center border-bottom">
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/participantes/form', participante.idPar]" routerLinkActive="active"
+        #rlaParticipante="routerLinkActive" [class.disabled]="rlaParticipante.isActive"
+        (click)="rlaParticipante.isActive && $event.preventDefault()">
+        Participante
+      </a>
+    </li>
+    <li class="nav-item" *ngIf="participante.edad < 18">
+      <a class="nav-link"
+        [routerLink]="apoderadoExistenteId ? ['/apoderados/form', apoderadoExistenteId] : ['/apoderados/form']"
+        [queryParams]="{ idParticipante: participante.idPar }" routerLinkActive="active"
+        #rlaApoderado="routerLinkActive" [class.disabled]="rlaApoderado.isActive"
+        (click)="rlaApoderado.isActive && $event.preventDefault()">
+        Apoderado
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/examenes/form', participante.idPar]" routerLinkActive="active"
+        #rlaExamenes="routerLinkActive" [class.disabled]="rlaExamenes.isActive"
+        (click)="rlaExamenes.isActive && $event.preventDefault()">
+        Exámenes
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/datoclinicos/form', participante.idPar]" routerLinkActive="active"
+        #rlaDatosClinicos="routerLinkActive" [class.disabled]="rlaDatosClinicos.isActive"
+        (click)="rlaDatosClinicos.isActive && $event.preventDefault()">
+        Datos clínicos
+      </a>
+    </li>
 
-    <form class="row g-3">
-      <!-- Fila 1: Nombres -->
+
+  </ul>
+
+
+  <div class="card-body bg-light d-flex justify-content-center">
+    <form class="row g-4 px-3" style="max-width: 800px; width: 100%;">
+
       <div class="col-md-6">
         <label class="form-label">Nombres</label>
         <input type="text" class="form-control" [(ngModel)]="participante.nombre" name="nombre">
       </div>
 
-      <!-- Fila 2: Apellidos -->
       <div class="col-md-6">
         <label class="form-label">Apellido Paterno</label>
         <input type="text" class="form-control" [(ngModel)]="participante.apellidoPaterno" name="apellidoPaterno">
       </div>
+
       <div class="col-md-6">
         <label class="form-label">Apellido Materno</label>
         <input type="text" class="form-control" [(ngModel)]="participante.apellidoMaterno" name="apellidoMaterno">
       </div>
 
-      <!-- Fila 3: Sexo -->
       <div class="col-md-6">
         <label class="form-label">Sexo</label>
         <select class="form-select" [(ngModel)]="participante.sexo" name="sexo">
@@ -46,7 +65,6 @@
         </select>
       </div>
 
-      <!-- Fila 4: Documento -->
       <div class="col-md-6">
         <label class="form-label">Documento de identidad</label>
         <select class="form-select" [(ngModel)]="participante.tipoDocumento" name="tipoDocumento">
@@ -54,19 +72,17 @@
           <option value="Carnet de Extranjería">Carnet de Extranjería</option>
         </select>
       </div>
+
       <div class="col-md-6">
         <label class="form-label">N° de documento</label>
         <input type="text" class="form-control" [(ngModel)]="participante.numeroDocumento" name="numeroDocumento">
       </div>
 
-      <!-- Fila 5: Fecha nacimiento y edad -->
-      
       <div class="col-md-6">
         <label class="form-label">Edad</label>
         <input type="number" class="form-control" [(ngModel)]="participante.edad" name="edad">
       </div>
 
-      <!-- Campos condicionales para mujeres -->
       <div class="col-md-6" *ngIf="participante.sexo === 'F'">
         <label class="form-label">Gestante</label>
         <select class="form-select" [(ngModel)]="participante.gestante" name="gestante">
@@ -80,22 +96,21 @@
         <input type="number" class="form-control" [(ngModel)]="participante.edadGestacional" name="edadGestacional">
       </div>
 
-      <!-- Botones (mantenidos igual) -->
-      <div class="col-12 d-flex justify-content-end mt-4">
-        <button type="button" class="btn btn-success me-2" (click)="create()" *ngIf="!participante.idPar; else elseBlock">
+      <div class="col-12 d-flex justify-content-center mt-5">
+        <button type="button" class="btn btn-success mx-2" (click)="create()"
+          *ngIf="!participante.idPar; else elseBlock">
           Guardar
         </button>
         <ng-template #elseBlock>
-          <button type="button" class="btn btn-primary" (click)="update()">Editar</button>
-        </ng-template> 
-        <button *ngIf="participante.idPar" type="button" class="btn btn-warning" (click)="continueToExams()">
-          Agregar Exámenes
+          <button type="button" class="btn btn-primary mx-2" (click)="update()">
+            Editar
+          </button>
+        </ng-template>
+        <button *ngIf="participante.idPar" type="button" class="btn btn-info" (click)="continueToExams()">
+          Exámenes
         </button>
       </div>
 
-      <div class="col-12 d-flex justify-content-start mt-4">
-       
-      </div>
     </form>
   </div>
 </div>

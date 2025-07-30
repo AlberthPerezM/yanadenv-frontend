@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { ParticipanteService } from './participante.service';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Participante } from './participante';
+import { ParticipanteService } from '../../core/service/participante.service';
+import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
+import { Participante } from '../../core/models/participante';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ApoderadoService } from '../apoderado/apoderado.service';
+import { ApoderadoService } from '../../core/service/apoderado.service';
 
 @Component({
   selector: 'app-form-participante',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink, RouterModule],
   templateUrl: './formParticipante.component.html',
   styleUrl: './formParticipante.component.css'
 })
 export class FormParticipanteComponent implements OnInit {
   public participante: Participante = new Participante();
-  public titulo: string = 'Crear Participante';
+  public titulo: string = 'Participante';
   apoderadoExistenteId: number | null = null; // Guardará el ID del apoderado si existe
   idparticipante: number | null = null;
 
@@ -25,7 +25,7 @@ export class FormParticipanteComponent implements OnInit {
     private apoderadoService: ApoderadoService,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.cargarParticipante();

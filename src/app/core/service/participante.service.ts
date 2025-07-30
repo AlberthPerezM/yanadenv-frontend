@@ -3,14 +3,14 @@ import { map, Observable, of, catchError, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { Participante } from './participante';
+import { Participante } from '../models/participante';
 import { BACKEND_URL } from '../../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ParticipanteService {
-  
+
   //private urlEndPoint: string = 'http://localhost:8080/api/participantes';
 
   private urlEndPoint: string = BACKEND_URL + '/api/participantes';
@@ -52,12 +52,6 @@ export class ParticipanteService {
   //Metodo para contar participante
   countParticipantes(): Observable<number> {
     return this.http.get<number>(`${this.urlEndPoint}/count`);
-  }
-  // Método para actualizar un participante con sus exámenes
-  updateParticipanteExamenes(participante: Participante): Observable<Participante> {
-    return this.http.put<Participante>(`${this.urlEndPoint}/${participante.idPar}`, participante, {
-      headers: this.httpHeaders,
-    });
   }
 
   // Eliminar un participante

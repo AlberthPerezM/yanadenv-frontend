@@ -1,0 +1,6 @@
+.card-header-azul {
+    background-color: var(--color-azul) !important;
+    color: white;
+    text-align: center;
+    font-size: 0.8rem;
+}

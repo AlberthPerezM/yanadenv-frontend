@@ -1,11 +1,11 @@
 <div class="card border-primary mb-3">
-  <div class="card-header bg-primary text-white">
-    Apoderados
+  <div class="card-header card-header-azul fw-bold">
+    Apoderado
   </div>
   <div class="card-body">
     <h5 class="card-title text-primary">Listado de Apoderados</h5>
     <div class="my-2 text-left">
-        <button [routerLink]="['/apoderados/form']" class="btn btn-success">Crear Apoderado</button>
+      <button [routerLink]="['/apoderados/form']" class="btn btn-success">Crear Apoderado</button>
     </div>
     <table class="table table-responsive table-bordered table-striped table-hover">
       <thead>
@@ -35,7 +35,8 @@
           <td>{{ apoderado.participante?.nombre }}</td>
 
           <td>
-            <button type="button" [routerLink]="['/apoderados/form', apoderado.idApo]" class="btn btn-primary">Editar</button>
+            <button type="button" [routerLink]="['/apoderados/form', apoderado.idApo]"
+              class="btn btn-primary">Editar</button>
             <button type="button" (click)='delete(apoderado)' class="btn btn-danger btn-sm">Eliminar</button>
           </td>
         </tr>
