@@ -1,59 +1,53 @@
-<div class="form-group">
-  <label for="region">Región:</label>
-  <select
-    id="region"
-    class="form-control"
-    [(ngModel)]="selectedRegionId"
-    (change)="onRegionChange()">
-    <option [ngValue]="undefined">-- Seleccione Región --</option>
-    <option *ngFor="let region of regiones" [value]="region.idReg">
-      {{ region.nombreReg }}
-    </option>
-  </select>
+<div class="row">
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="region">Región:</label>
+      <select id="region" class="form-control" [(ngModel)]="selectedRegionId" (change)="onRegionChange()">
+        <option [ngValue]="undefined">-- Seleccione Región --</option>
+        <option *ngFor="let region of regiones" [value]="region.idReg">
+          {{ region.nombreReg }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="provincia">Provincia:</label>
+      <select id="provincia" class="form-control" [(ngModel)]="selectedProvinciaId" (change)="onProvinciaChange()"
+        [disabled]="!provincias.length">
+        <option [ngValue]="undefined">-- Seleccione Provincia --</option>
+        <option *ngFor="let provincia of provincias" [value]="provincia.idProv">
+          {{ provincia.nombreProv }}
+        </option>
+      </select>
+    </div>
+  </div>
 </div>
 
-<div class="form-group">
-  <label for="provincia">Provincia:</label>
-  <select
-    id="provincia"
-    class="form-control"
-    [(ngModel)]="selectedProvinciaId"
-    (change)="onProvinciaChange()"
-    [disabled]="!provincias.length">
-    <option [ngValue]="undefined">-- Seleccione Provincia --</option>
-    <option *ngFor="let provincia of provincias" [value]="provincia.idProv">
-      {{ provincia.nombreProv }}
-    </option>
-  </select>
-</div>
+<div class="row mt-3">
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="distrito">Distrito:</label>
+      <select id="distrito" class="form-control" [(ngModel)]="selectedDistritoId" (change)="onDistritoChange()"
+        [disabled]="!distritos.length">
+        <option [ngValue]="undefined">-- Seleccione Distrito --</option>
+        <option *ngFor="let distrito of distritos" [value]="distrito.idDist">
+          {{ distrito.nombreDist }}
+        </option>
+      </select>
+    </div>
+  </div>
 
-<div class="form-group">
-  <label for="distrito">Distrito:</label>
-  <select
-    id="distrito"
-    class="form-control"
-    [(ngModel)]="selectedDistritoId"
-    (change)="onDistritoChange()"
-    [disabled]="!distritos.length">
-    <option [ngValue]="undefined">-- Seleccione Distrito --</option>
-    <option *ngFor="let distrito of distritos" [value]="distrito.idDist">
-      {{ distrito.nombreDist }}
-    </option>
-  </select>
-</div>
-
-
-<!-- Mostrar centros si existen -->
-<div class="form-group">
-  <label for="centro">Centro:</label>
-  <select
-    id="centro"
-    class="form-control"
-    [(ngModel)]="selectedCentroId"
-    [disabled]="!centros.length">
-    <option [ngValue]="undefined">-- Seleccione Centro --</option>
-    <option *ngFor="let centro of centros" [value]="centro.idCent">
-      {{ centro.nombreCent }}
-    </option>
-  </select>
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="centro">Centro:</label>
+      <select id="centro" class="form-control" [(ngModel)]="selectedCentroId" [disabled]="!centros.length">
+        <option [ngValue]="undefined">-- Seleccione Centro --</option>
+        <option *ngFor="let centro of centros" [value]="centro.idCent">
+          {{ centro.nombreCent }}
+        </option>
+      </select>
+    </div>
+  </div>
 </div>

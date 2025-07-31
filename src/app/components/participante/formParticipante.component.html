@@ -4,6 +4,7 @@
   </div>
 
   <ul class="nav nav-tabs mb-4 justify-content-center border-bottom">
+    <!-- Participante -->
     <li class="nav-item">
       <a class="nav-link" [routerLink]="['/participantes/form', participante.idPar]" routerLinkActive="active"
         #rlaParticipante="routerLinkActive" [class.disabled]="rlaParticipante.isActive"
@@ -11,6 +12,8 @@
         Participante
       </a>
     </li>
+
+    <!-- Apoderado (solo si es menor de edad) -->
     <li class="nav-item" *ngIf="participante.edad < 18">
       <a class="nav-link"
         [routerLink]="apoderadoExistenteId ? ['/apoderados/form', apoderadoExistenteId] : ['/apoderados/form']"
@@ -20,6 +23,8 @@
         Apoderado
       </a>
     </li>
+
+    <!-- Exámenes -->
     <li class="nav-item">
       <a class="nav-link" [routerLink]="['/examenes/form', participante.idPar]" routerLinkActive="active"
         #rlaExamenes="routerLinkActive" [class.disabled]="rlaExamenes.isActive"
@@ -27,6 +32,8 @@
         Exámenes
       </a>
     </li>
+
+    <!-- Datos clínicos -->
     <li class="nav-item">
       <a class="nav-link" [routerLink]="['/datoclinicos/form', participante.idPar]" routerLinkActive="active"
         #rlaDatosClinicos="routerLinkActive" [class.disabled]="rlaDatosClinicos.isActive"
@@ -34,12 +41,10 @@
         Datos clínicos
       </a>
     </li>
-
-
   </ul>
 
 
-  <div class="card-body bg-light d-flex justify-content-center">
+  <div class="card-body  d-flex justify-content-center">
     <form class="row g-4 px-3" style="max-width: 800px; width: 100%;">
 
       <div class="col-md-6">

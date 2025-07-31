@@ -3,6 +3,7 @@
     {{ titulo }}
   </div>
   <ul class="nav nav-tabs mb-4 justify-content-center border-bottom">
+    <!-- Participante -->
     <li class="nav-item">
       <a class="nav-link" [routerLink]="['/participantes/form', participante.idPar]" routerLinkActive="active"
         #rlaParticipante="routerLinkActive" [class.disabled]="rlaParticipante.isActive"
@@ -11,6 +12,7 @@
       </a>
     </li>
 
+    <!-- Exámenes -->
     <li class="nav-item">
       <a class="nav-link" [routerLink]="['/examenes/form', participante.idPar]" routerLinkActive="active"
         #rlaExamenes="routerLinkActive" [class.disabled]="rlaExamenes.isActive"
@@ -18,6 +20,8 @@
         Exámenes
       </a>
     </li>
+
+    <!-- Datos clínicos -->
     <li class="nav-item">
       <a class="nav-link" [routerLink]="['/datoclinicos/form', participante.idPar]" routerLinkActive="active"
         #rlaDatosClinicos="routerLinkActive" [class.disabled]="rlaDatosClinicos.isActive"
@@ -25,22 +29,22 @@
         Datos clínicos
       </a>
     </li>
-
-
   </ul>
-  <div class="card-body bg-light">
-    <form class="row g-3">
-      <div class="col-12 mb-3">
-        <p><strong>Participante</strong> {{ participante?.nombre + ' ' + participante.apellidoPaterno +' ' +
-          participante.apellidoMaterno }}</p>
-      </div>
 
+  <div class="card-body ">
+    <form class="row g-3">
+      <!--<div class="col-12 mb-3">
+        <p class="text-center">
+          <strong>Participante</strong>
+          {{ participante?.nombre + ' ' + participante.apellidoPaterno + ' ' + participante.apellidoMaterno }}
+        </p>
+      </div>-->
       <div class="row">
         <div *ngFor="let examen of examenes; let i = index"
           class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4 d-flex align-items-stretch">
           <div class="card shadow-sm h-100 w-100">
             <div class="card-body d-flex flex-column">
-              <h5 class="card-title mb-3">Examen {{ i + 1 }}</h5>
+              <h5 class="card-title mb-3 text-center">Examen {{ i + 1 }}</h5>
 
               <div class="mb-3">
                 <label for="nombreExa-{{ i }}" class="form-label">Nombre</label>
@@ -66,21 +70,25 @@
                   name="fechaResultado-{{ i }}" required />
               </div>
 
-              <div class="mt-auto text-end">
+              <div class="d-flex justify-content-center mt-3">
                 <button type="button" class="btn btn-danger btn-sm" (click)="eliminarExamen(i)">
                   Eliminar Examen
                 </button>
               </div>
+
             </div>
           </div>
         </div>
       </div>
 
-      <div class="col-12 d-flex justify-content-end mt-3">
-        <button type="button" class="btn btn-info me-2" (click)="agregarExamen()">Agregar Examen</button>
-        <button type="button" class="btn btn-primary" (click)="guardarExamenes()"
-          [disabled]="!participante?.idPar || examenes.length === 0">Guardar Exámenes</button>
+      <div class="col-12 d-flex justify-content-center mt-3">
+        <button type="button" class="btn btn-info mx-2" (click)="agregarExamen()">Agregar Examen</button>
+        <button type="button" class="btn btn-primary mx-2" (click)="guardarExamenes()"
+          [disabled]="!participante?.idPar || examenes.length === 0">
+          Guardar Exámenes
+        </button>
       </div>
+
     </form>
   </div>
 </div>

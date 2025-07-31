@@ -56,11 +56,11 @@ export class FormParticipanteComponent implements OnInit {
           Swal.fire('Nuevo Participante', `Participante creado: ${response.nombre}`, 'success');
 
           // Redirige a la página de detalle del participante o a la lista
-          this.router.navigate(['/participantes/detalle', response.idPar]);
+          //this.router.navigate(['/participantes/detalle', response.idPar]);
         } else {
           console.error('No se pudo obtener el ID del participante creado');
           Swal.fire('Error', 'No se pudo obtener el ID del participante creado', 'error');
-          this.router.navigate(['/participantes']);
+          //this.router.navigate(['/participantes']);
         }
       },
       (error) => {
@@ -85,14 +85,18 @@ export class FormParticipanteComponent implements OnInit {
   // Actualizar participante
   public update(): void {
     this.participanteService.update(this.participante).subscribe((json) => {
-      this.router.navigate(['/participantes']);
-      Swal.fire(
-        'Participante Actualizado',
-        `Participante actualizado: ${json.participante.nombre}`,
-        'success'
-      );
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Participante actualizado",
+        text: "Los datos se guardaron correctamente.",
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true
+      });
     });
   }
+
 
   public continueToExams(): void {
     // Solo requerir apoderado si el participante es menor de edad

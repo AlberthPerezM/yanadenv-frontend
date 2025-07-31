@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApoderadoService } from '../../core/service/apoderado.service';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Apoderado } from '../../core/models/apoderado';
 
 @Component({
   selector: 'app-apoderado',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, RouterModule],
   templateUrl: './apoderado.component.html',
   styleUrl: './apoderado.component.css'
 })
 export class ApoderadosComponent implements OnInit {
   apoderados: Apoderado[] = [];
 
-  constructor(private apoderadoService: ApoderadoService) {}
+  constructor(private apoderadoService: ApoderadoService) { }
 
   ngOnInit() {
     this.apoderadoService.getApoderados().subscribe(

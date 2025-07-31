@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -9,12 +9,12 @@ import { DatoClinicoService } from '../../core/service/dato-clinico.service';
 @Component({
   selector: 'app-form-datoclinico',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './form-dato-clinico.component.html'
 })
 export class FormDatoClinicoComponent implements OnInit {
   datoclinico: DatoClinico = new DatoClinico();
-  titulo: string = 'Crear Dato Clínico';
+  titulo: string = 'Datos clinicos';
   showOtroSintoma2: boolean = false;
   showOtroSintoma3: boolean = false;
   showOtroSintoma4: boolean = false;
@@ -23,7 +23,7 @@ export class FormDatoClinicoComponent implements OnInit {
     private datoclinicoService: DatoClinicoService,
     public router: Router,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.cargarDatoClinico();
@@ -33,7 +33,7 @@ export class FormDatoClinicoComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       const id = params['idDat'];
       if (id) {
-        this.titulo = 'Editar Dato Clínico';
+        this.titulo = 'Datos clínicos';
         this.datoclinicoService.getDatoClinico(id).subscribe(
           datoclinico => {
             this.datoclinico = datoclinico;
@@ -80,7 +80,7 @@ export class FormDatoClinicoComponent implements OnInit {
 
   create(): void {
     if (!this.validarFormulario()) return;
-    
+
     this.datoclinicoService.create(this.datoclinico).subscribe(
       () => {
         Swal.fire('Éxito', 'Dato clínico creado con éxito', 'success');
@@ -94,7 +94,7 @@ export class FormDatoClinicoComponent implements OnInit {
 
   update(): void {
     if (!this.validarFormulario()) return;
-    
+
     this.datoclinicoService.update(this.datoclinico).subscribe(
       () => {
         Swal.fire('Éxito', 'Dato clínico actualizado con éxito', 'success');

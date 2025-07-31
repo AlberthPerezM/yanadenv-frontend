@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApoderadoService } from '../../core/service/apoderado.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,7 @@ import { Apoderado } from '../../core/models/apoderado';
 @Component({
   selector: 'app-form-apoderado',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterModule],
   templateUrl: './form-apoderado.component.html',
 })
 export class FormApoderadoComponent implements OnInit {
@@ -63,8 +63,8 @@ export class FormApoderadoComponent implements OnInit {
   // Crear apoderado
   create(): void {
     this.apoderadoService.create(this.apoderado).subscribe((json) => {
-      this.router.navigate(['/apoderados']);
-      Swal.fire('Nuevo Apoderado', `Apoderado creado: ${json.apoderado.nombre}`, 'success');
+      //this.router.navigate(['/apoderados']);
+      Swal.fire('Nuevo Apoderado', `Apoderado creado`, 'success');
     });
   }
   // Cargar apoderado por ID
@@ -81,8 +81,8 @@ export class FormApoderadoComponent implements OnInit {
   // Actualizar apoderado
   public update(): void {
     this.apoderadoService.update(this.apoderado).subscribe((json) => {
-      this.router.navigate(['/apoderados']);
-      Swal.fire('Apoderado Actualizado', `Apoderado actualizado: ${json.apoderado.nombre}`, 'success');
+      //this.router.navigate(['/apoderados']);
+      Swal.fire('Apoderado Actualizado', `Apoderado actualizado`, 'success');
     });
   }
   compararParticipante(o1: Participante | null, o2: Participante | null): boolean {

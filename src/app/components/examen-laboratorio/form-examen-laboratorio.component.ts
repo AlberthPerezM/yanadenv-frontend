@@ -55,7 +55,7 @@ export class FormExamenLaboratorioComponent {
       let id = params['idExa'];
       if (id) {
         this.examenService.getExamen(id).subscribe((examen) => {
-          this.examen = { ...examen }; // Clonamos para evitar problemas de referencia
+          this.examen = { ...examen };
           console.log('Examen cargado:', this.examen);
         });
       }
@@ -142,7 +142,7 @@ export class FormExamenLaboratorioComponent {
   private actualizarExamenesExistentes(examenes: ExamenLaboratorio[]): void {
     if (examenes.length === 0) {
       Swal.fire('Éxito', 'Exámenes guardados correctamente.', 'success');
-      this.router.navigate(['/participantes']);
+      //this.router.navigate(['/participantes']);
       return;
     }
     let errores = 0;
@@ -159,7 +159,7 @@ export class FormExamenLaboratorioComponent {
               Swal.fire('Advertencia', `Se actualizaron con errores (${errores})`, 'warning'
               );
             }
-            this.router.navigate(['/participantes']);
+            //this.router.navigate(['/participantes']);
           }
         },
       });
