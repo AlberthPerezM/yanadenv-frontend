@@ -25,19 +25,14 @@ export class FormExamenLaboratorioComponent {
   public participante: any = {};
 
   // Lista de exámenes predefinidos
-  examenesDisponibles: string[] = [
-    'ELISA NS1-Dengue',
-    'Aislamiento viral',
-    'qRT-PCR Suero',
-    'qRT-PCR Orina',
-  ];
+  examenesDisponibles: string[] = ['ELISA NS1-Dengue', 'Aislamiento viral', 'qRT-PCR Suero', 'qRT-PCR Orina'];
 
   constructor(
     private participanteService: ParticipanteService,
     private examenService: ExamenLaboratorioService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private http: HttpClient // Agregar esta línea
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -109,6 +104,7 @@ export class FormExamenLaboratorioComponent {
       this.examenes.splice(index, 1);
     }
   }
+
 
   /*Asociación de examen a participante*/
   guardarExamenes(): void {

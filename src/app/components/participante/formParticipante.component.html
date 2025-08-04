@@ -102,16 +102,21 @@
       </div>
 
       <div class="col-12 d-flex justify-content-center mt-5">
-        <button type="button" class="btn btn-success mx-2" (click)="create()"
+        <button type="button" class="btn mx-2 text-white"
+          [ngStyle]="{ 'background-color': '#090977', 'border': 'none' }" (click)="create()"
           *ngIf="!participante.idPar; else elseBlock">
           Guardar
         </button>
+
         <ng-template #elseBlock>
-          <button type="button" class="btn btn-primary mx-2" (click)="update()">
+          <button type="button" class="btn mx-2 text-white"
+            [ngStyle]="{ 'background-color': '#090977', 'border': 'none' }" (click)="update()">
             Editar
           </button>
         </ng-template>
-        <button *ngIf="participante.idPar" type="button" class="btn btn-info" (click)="continueToExams()">
+
+        <button *ngIf="participante.idPar" type="button" class="btn mx-2 text-white"
+          [ngStyle]="{ 'background-color': '#090977', 'border': 'none' }" (click)="continueToExams()">
           Exámenes
         </button>
       </div>

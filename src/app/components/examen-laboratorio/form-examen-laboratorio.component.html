@@ -23,7 +23,7 @@
 
     <!-- Datos clínicos -->
     <li class="nav-item">
-      <a class="nav-link" [routerLink]="['/datoclinicos/form', participante.idPar]" routerLinkActive="active"
+      <a class="nav-link" [routerLink]="['/datoclinicos/form']" routerLinkActive="active"
         #rlaDatosClinicos="routerLinkActive" [class.disabled]="rlaDatosClinicos.isActive"
         (click)="rlaDatosClinicos.isActive && $event.preventDefault()">
         Datos clínicos
@@ -33,12 +33,6 @@
 
   <div class="card-body ">
     <form class="row g-3">
-      <!--<div class="col-12 mb-3">
-        <p class="text-center">
-          <strong>Participante</strong>
-          {{ participante?.nombre + ' ' + participante.apellidoPaterno + ' ' + participante.apellidoMaterno }}
-        </p>
-      </div>-->
       <div class="row">
         <div *ngFor="let examen of examenes; let i = index"
           class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4 d-flex align-items-stretch">
@@ -75,20 +69,22 @@
                   Eliminar Examen
                 </button>
               </div>
-
             </div>
           </div>
         </div>
       </div>
-
       <div class="col-12 d-flex justify-content-center mt-3">
-        <button type="button" class="btn btn-info mx-2" (click)="agregarExamen()">Agregar Examen</button>
-        <button type="button" class="btn btn-primary mx-2" (click)="guardarExamenes()"
+        <button type="button" class="btn mx-2 text-white"
+          [ngStyle]="{ 'background-color': '#090977', 'border': 'none' }" (click)="agregarExamen()">
+          Agregar Examen
+        </button>
+
+        <button type="button" class="btn mx-2 text-white"
+          [ngStyle]="{ 'background-color': '#090977', 'border': 'none' }" (click)="guardarExamenes()"
           [disabled]="!participante?.idPar || examenes.length === 0">
           Guardar Exámenes
         </button>
       </div>
-
     </form>
   </div>
 </div>

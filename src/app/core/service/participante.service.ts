@@ -11,13 +11,8 @@ import { BACKEND_URL } from '../../config/config';
 })
 export class ParticipanteService {
 
-  //private urlEndPoint: string = 'http://localhost:8080/api/participantes';
-
   private urlEndPoint: string = BACKEND_URL + '/api/participantes';
-
-
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
-
   constructor(private http: HttpClient, private router: Router) { }
 
   // Listar participantes

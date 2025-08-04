@@ -1,13 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  map,
-  Observable,
-  of,
-  catchError,
-  throwError,
-  tap,
-  finalize,
-} from 'rxjs';
+import { map, Observable, of, catchError, throwError, tap, finalize } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
@@ -19,18 +11,16 @@ import { BACKEND_URL } from '../../config/config';
   providedIn: 'root',
 })
 export class ExamenLaboratorioService {
-  //private urlEndPoint: string = 'http://localhost:8080/api/examenes';
   private urlEndPoint: string = BACKEND_URL + '/api/examenes';
-
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(
     private http: HttpClient,
     private participanteService: ParticipanteService,
     private router: Router
-  ) {}
+  ) { }
 
-  /** Obtener todos los exámenes*/
+  // Obtener todos los exámenes
   getExamenes(): Observable<ExamenLaboratorio[]> {
     return this.http.get(this.urlEndPoint).pipe(
       map((response) => response as ExamenLaboratorio[]),
@@ -40,7 +30,7 @@ export class ExamenLaboratorioService {
       })
     );
   }
-
+  //Crear un examen en solitario
   createExamen(examen: ExamenLaboratorio): Observable<ExamenLaboratorio> {
     console.log('Creando examen sin asociar:', examen);
     return this.http
@@ -59,23 +49,12 @@ export class ExamenLaboratorioService {
       );
   }
 
-  /**
-   * MÉTODO RECOMENDADO: Crea un examen y lo asocia directamente a un participante
-   * Este método resuelve el problema del idExa undefined
-   */
+  //Crea un examen y lo asocia directamente a un participante
   create(examen: ExamenLaboratorio, idParticipante: number): Observable<any> {
-    // Aseguramos que la URL coincida con el endpoint en el backend
     const url = `${this.urlEndPoint}/participante/${idParticipante}`;
-
-    console.log('Creando y asociando examen:', examen);
-    console.log('Para el participante ID:', idParticipante);
-
     return this.http.post<any>(url, examen, { headers: this.httpHeaders }).pipe(
       tap((response) => {
-        // El backend debe devolver el examen con su ID generado
         console.log('Respuesta de creación:', response);
-
-        // Actualizamos el objeto local con el ID generado por el servidor
         if (response && response.idExa) {
           examen.idExa = response.idExa;
         }
@@ -96,7 +75,7 @@ export class ExamenLaboratorioService {
     examenes: ExamenLaboratorio[],
     idParticipante: number
   ): Observable<any> {
-    const url = `http://localhost:8080/api/participantes/${idParticipante}/examenes`;
+    const url = BACKEND_URL+ `/api/participantes/${idParticipante}/examenes`;
     return this.http
       .post<any>(url, examenes, {
         headers: new HttpHeaders({
@@ -110,6 +89,26 @@ export class ExamenLaboratorioService {
         })
       );
   }
+
+  delete(id: number): Observable<ExamenLaboratorio> {
+    return this.http
+      .delete<ExamenLaboratorio>(`${this.urlEndPoint}/${id}`, {
+        headers: this.httpHeaders,
+      })
+      .pipe(
+        catchError((e) => {
+          console.error('Error al eliminar el examen:', e);
+          let errorMsg = 'Error al eliminar el examen';
+          if (e.error && e.error.mensaje) {
+            errorMsg = e.error.mensaje;
+          }
+          Swal.fire('Error', errorMsg, 'error');
+          return throwError(() => e);
+        })
+      );
+  }
+
+
 
   getExamen(id: number): Observable<ExamenLaboratorio> {
     return this.http.get<ExamenLaboratorio>(`${this.urlEndPoint}/${id}`).pipe(
@@ -175,21 +174,4 @@ export class ExamenLaboratorioService {
     );
   }
 
-  delete(id: number): Observable<ExamenLaboratorio> {
-    return this.http
-      .delete<ExamenLaboratorio>(`${this.urlEndPoint}/${id}`, {
-        headers: this.httpHeaders,
-      })
-      .pipe(
-        catchError((e) => {
-          console.error('Error al eliminar el examen:', e);
-          let errorMsg = 'Error al eliminar el examen';
-          if (e.error && e.error.mensaje) {
-            errorMsg = e.error.mensaje;
-          }
-          Swal.fire('Error', errorMsg, 'error');
-          return throwError(() => e);
-        })
-      );
-  }
 }

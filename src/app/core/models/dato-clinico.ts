@@ -1,5 +1,7 @@
 // dato-clinico.ts
 
+import { Participante } from "./participante";
+
 export class DatoClinico {
   idDat?: number;
   fechaRegistro?: Date;
@@ -38,4 +40,6 @@ export class DatoClinico {
   glasgowAperturaOcular?: number;
   glasgowAperturaMotora?: number;
   glasgowAperturaVerbal?: number;
+
+
 }

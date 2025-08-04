@@ -29,6 +29,7 @@ export class FormParticipanteComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarParticipante();
+    this.router.navigate(['/datoclinicos/form', this.participante.idPar]);
 
     this.activatedRoute.params.subscribe((params) => {
       this.participante.idPar = +params['idPar'];

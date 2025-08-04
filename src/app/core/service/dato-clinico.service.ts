@@ -4,40 +4,47 @@ import { Observable, map, catchError, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { DatoClinico } from '../models/dato-clinico';
-import { BACKEND_URL } from '../../config/config';
+import { BACKEND_URL } from '../../config/config'; // O puedes usar environment.backendUrl
 
 @Injectable({
   providedIn: 'root',
 })
 export class DatoClinicoService {
-  //private urlEndPoint: string = 'http://localhost:8080/api/datosclinicos';
 
-  private urlEndPoint: string = BACKEND_URL + '/api/datosclinicos';
-
-  private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+  private urlEndPoint: string = `${BACKEND_URL}/api/datosclinicos`;
 
   constructor(private http: HttpClient, private router: Router) { }
+
+  private getJsonHeaders(): HttpHeaders {
+    return new HttpHeaders({ 'Content-Type': 'application/json' });
+  }
 
   // Listar todos los datos clínicos
   getDatosClinicos(): Observable<DatoClinico[]> {
     return this.http
-      .get(this.urlEndPoint)
-      .pipe(map((response) => response as DatoClinico[]));
-  }
-
-  // Crear nuevo dato clínico
-  create(datoClinico: DatoClinico): Observable<any> {
-    return this.http
-      .post<DatoClinico>(this.urlEndPoint, datoClinico, {
-        headers: this.httpHeaders,
-      })
+      .get<DatoClinico[]>(this.urlEndPoint)
       .pipe(
         catchError((e) => {
-          console.error(e.error.mensaje);
-          Swal.fire(e.error.mensaje, e.error.error, 'error');
-          return throwError(e);
+          console.error('Error al obtener datos clínicos:', e);
+          Swal.fire('Error', 'No se pudieron cargar los datos clínicos', 'error');
+          return throwError(() => e);
         })
       );
+  }
+
+  // Crear nuevo dato clínico asociado a un participante
+  create(datoClinico: DatoClinico, idPar: number): Observable<DatoClinico> {
+    const url = `${this.urlEndPoint}/participante/${idPar}`;
+    return this.http.post<DatoClinico>(url, datoClinico, {
+      headers: this.getJsonHeaders()
+    }).pipe(
+      catchError((e) => {
+        console.error('Error al crear dato clínico:', e);
+        const mensaje = e.error?.mensaje || 'No se pudo crear el dato clínico';
+        Swal.fire('Error', mensaje, 'error');
+        return throwError(() => e);
+      })
+    );
   }
 
   // Obtener dato clínico por ID
@@ -45,19 +52,30 @@ export class DatoClinicoService {
     return this.http.get<DatoClinico>(`${this.urlEndPoint}/${id}`).pipe(
       catchError((e) => {
         this.router.navigate(['/datosclinicos']);
-        console.error(e.error.mensaje);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
-        return throwError(e);
+        const mensaje = e.error?.mensaje || 'Dato clínico no encontrado';
+        console.error(mensaje);
+        Swal.fire('Error', mensaje, 'error');
+        return throwError(() => e);
       })
     );
   }
 
   // Actualizar dato clínico existente
   update(datoClinico: DatoClinico): Observable<any> {
-    return this.http.put<any>(
-      `${this.urlEndPoint}/${datoClinico.idDat}`,
+    if (!datoClinico.idDat) {
+      return throwError(() => new Error('ID de dato clínico no definido para actualización'));
+    }
+
+    return this.http.put<any>(`${this.urlEndPoint}/${datoClinico.idDat}`,
       datoClinico,
-      { headers: this.httpHeaders }
+      { headers: this.getJsonHeaders() }
+    ).pipe(
+      catchError((e) => {
+        console.error('Error al actualizar dato clínico:', e);
+        const mensaje = e.error?.mensaje || 'No se pudo actualizar el dato clínico';
+        Swal.fire('Error', mensaje, 'error');
+        return throwError(() => e);
+      })
     );
   }
 
@@ -65,19 +83,26 @@ export class DatoClinicoService {
   delete(id: number): Observable<DatoClinico> {
     return this.http
       .delete<DatoClinico>(`${this.urlEndPoint}/${id}`, {
-        headers: this.httpHeaders,
+        headers: this.getJsonHeaders()
       })
       .pipe(
         catchError((e) => {
-          console.error(e.error.mensaje);
-          Swal.fire(e.error.mensaje, e.error.error, 'error');
-          return throwError(e);
+          const mensaje = e.error?.mensaje || 'No se pudo eliminar el dato clínico';
+          console.error(mensaje);
+          Swal.fire('Error', mensaje, 'error');
+          return throwError(() => e);
         })
       );
   }
 
-  //Contador de datos clinicos
+  // Contador de datos clínicos
   countDatosClinicos(): Observable<number> {
-    return this.http.get<number>(`${this.urlEndPoint}/count`);
+    return this.http.get<number>(`${this.urlEndPoint}/count`).pipe(
+      catchError((e) => {
+        console.error('Error al contar datos clínicos:', e);
+        Swal.fire('Error', 'No se pudo obtener el total de datos clínicos', 'error');
+        return throwError(() => e);
+      })
+    );
   }
 }
