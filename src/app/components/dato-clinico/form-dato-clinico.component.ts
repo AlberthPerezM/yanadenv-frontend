@@ -15,88 +15,101 @@ import { RouterModule } from '@angular/router';
 })
 export class FormDatoClinicoComponent implements OnInit {
 
-  datoclinico!: DatoClinico;
-  titulo: string = 'Datos clínicos';
-  showOtroSintoma2: boolean = false;
-  showOtroSintoma3: boolean = false;
-  showOtroSintoma4: boolean = false;
+  datoclinico: DatoClinico = new DatoClinico();
+  titulo = 'Datos clínicos';
   idParticipante: number | null = null;
+
+  // Mostrar campos condicionales para "otros síntomas"
+  showOtroSintoma2 = false;
+  showOtroSintoma3 = false;
+  showOtroSintoma4 = false;
 
   constructor(
     private datoclinicoService: DatoClinicoService,
-    public router: Router,
+    private router: Router,
     private activatedRoute: ActivatedRoute
-  ) {
-    this.datoclinico = new DatoClinico();
-  }
+  ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(params => {
-      const idDat = params['idDat'];
-      const idPar = params['idPar'];
+    this.activatedRoute.params.subscribe(({ idPar, idDat }) => {
+      this.idParticipante = idPar ? +idPar : null;
 
       if (idDat) {
-        this.cargarDatoClinico(+idDat); // ✅ PASA el idDat aquí correctamente
-      } else if (idPar) {
-        this.titulo = 'Nuevo dato clínico';
-        this.idParticipante = Number(idPar);
-        console.log('Modo creación - ID del participante:', this.idParticipante);
+        this.titulo = 'Editar dato clínico';
+        this.cargarDatoClinico(+idDat);
+      } else {
+        this.titulo = 'Registrar dato clínico';
       }
     });
   }
 
   create(): void {
-    if (!this.validarFormulario()) return;
-
-    if (!this.idParticipante) {
-      Swal.fire('Error', 'No se recibió el ID del participante', 'error');
+    if (!this.validarFormulario() || !this.idParticipante) {
+      if (!this.idParticipante) {
+        this.mostrarAlerta('Error', 'No se recibió el ID del participante', 'error');
+      }
       return;
     }
 
-    this.datoclinicoService.create(this.datoclinico, this.idParticipante).subscribe(
-      () => {
-        Swal.fire('Éxito', 'Dato clínico registrado con éxito', 'success');
-        this.router.navigate(['/datoclinicos']);
-      },
-      error => {
-        Swal.fire('Error', 'No se pudo registrar el dato clínico', 'error');
-      }
-    );
+    this.datoclinicoService.create(this.datoclinico, this.idParticipante).subscribe({
+      next: () => this.finalizarAccion('Dato clínico registrado con éxito'),
+      error: () => this.mostrarAlerta('Error', 'No se pudo registrar el dato clínico', 'error')
+    });
   }
 
   update(): void {
     if (!this.validarFormulario()) return;
 
-    this.datoclinicoService.update(this.datoclinico).subscribe(
-      () => {
-        Swal.fire('Éxito', 'Dato clínico actualizado con éxito', 'success');
-        this.router.navigate(['/datoclinicos']);
+    this.datoclinicoService.update(this.datoclinico).subscribe({
+      next: () => this.finalizarAccion('Dato clínico actualizado con éxito'),
+      error: () => this.mostrarAlerta('Error', 'No se pudo actualizar el dato clínico', 'error')
+    });
+  }
+
+  private cargarDatoClinico(idDat: number): void {
+    this.datoclinicoService.getDatoClinico(idDat).subscribe({
+      next: dato => {
+        this.datoclinico = dato;
+        this.showOtroSintoma2 = !!dato.otrosSintomas2;
+        this.showOtroSintoma3 = !!dato.otrosSintomas3;
+        this.showOtroSintoma4 = !!dato.otrosSintomas4;
       },
-      error => {
-        Swal.fire('Error', 'No se pudo actualizar el dato clínico', 'error');
+      error: () => {
+        this.mostrarAlerta('Error', 'No se pudo cargar el dato clínico', 'error');
+        this.router.navigate(['/datoclinicos']);
       }
-    );
+    });
   }
 
   private validarFormulario(): boolean {
     if (!this.datoclinico.fechaInicioSintomas) {
-      Swal.fire('Validación', 'La fecha de inicio de síntomas es requerida', 'warning');
+      this.mostrarAlerta('Validación', 'La fecha de inicio de síntomas es requerida', 'warning');
       return false;
     }
 
     if (this.datoclinico.compromisoOrganos && !this.datoclinico.tipoCompromisoOrganos) {
-      Swal.fire('Validación', 'Debe especificar el tipo de compromiso de órganos', 'warning');
+      this.mostrarAlerta('Validación', 'Debe especificar el tipo de compromiso de órganos', 'warning');
       return false;
     }
 
     if (this.datoclinico.sangradoGrave && !this.datoclinico.tipoSangrado) {
-      Swal.fire('Validación', 'Debe especificar el tipo de sangrado', 'warning');
+      this.mostrarAlerta('Validación', 'Debe especificar el tipo de sangrado', 'warning');
       return false;
     }
 
     return true;
   }
 
+  private finalizarAccion(mensaje: string): void {
+    this.mostrarAlerta('Éxito', mensaje, 'success');
+    this.router.navigate(['/datoclinicos']);
+  }
+
+  private mostrarAlerta(titulo: string, mensaje: string, tipo: 'success' | 'error' | 'warning'): void {
+    Swal.fire(titulo, mensaje, tipo);
+  }
+
+  // Métodos para manejar limpieza de campos condicionales
   onFiebreChange(): void {
     if (!this.datoclinico.fiebre) {
       this.datoclinico.temperatura = undefined;
@@ -115,6 +128,7 @@ export class FormDatoClinicoComponent implements OnInit {
     }
   }
 
+  // Añadir campos adicionales para "otros síntomas"
   addOtroSintoma(): void {
     if (!this.showOtroSintoma2) {
       this.showOtroSintoma2 = true;
@@ -124,22 +138,4 @@ export class FormDatoClinicoComponent implements OnInit {
       this.showOtroSintoma4 = true;
     }
   }
-
-  cargarDatoClinico(idDat: number): void {
-    this.titulo = 'Editar dato clínico';
-    this.datoclinicoService.getDatoClinico(idDat).subscribe(
-      datoclinico => {
-        this.datoclinico = datoclinico;
-
-        this.showOtroSintoma2 = !!this.datoclinico.otrosSintomas2;
-        this.showOtroSintoma3 = !!this.datoclinico.otrosSintomas3;
-        this.showOtroSintoma4 = !!this.datoclinico.otrosSintomas4;
-      },
-      error => {
-        Swal.fire('Error', 'No se pudo cargar el dato clínico', 'error');
-        this.router.navigate(['/datoclinicos']);
-      }
-    );
-  }
-
 }

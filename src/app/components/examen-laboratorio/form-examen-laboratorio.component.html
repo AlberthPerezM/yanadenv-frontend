@@ -23,12 +23,13 @@
 
     <!-- Datos clínicos -->
     <li class="nav-item">
-      <a class="nav-link" [routerLink]="['/datoclinicos/form']" routerLinkActive="active"
+      <a class="nav-link" [routerLink]="['/datoclinicos/form', participante.idPar]" routerLinkActive="active"
         #rlaDatosClinicos="routerLinkActive" [class.disabled]="rlaDatosClinicos.isActive"
         (click)="rlaDatosClinicos.isActive && $event.preventDefault()">
         Datos clínicos
       </a>
     </li>
+
   </ul>
 
   <div class="card-body ">

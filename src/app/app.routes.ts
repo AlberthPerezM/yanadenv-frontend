@@ -69,7 +69,8 @@ export const routes: Routes = [
       //Localización
       { path: 'localizaciones', component: LocalizacionSelectorComponent },
       { path: 'datoclinicos/form/:idDat', component: FormDatoClinicoComponent },
-      { path: 'datoclinicos/form/edit/:idDat', component: FormDatoClinicoComponent }
+      { path: 'datoclinicos/form/edit/:idDat', component: FormDatoClinicoComponent },
+      { path: 'datoclinicos/form/:idPar/:idDat', component: FormDatoClinicoComponent }
 
     ]
   },

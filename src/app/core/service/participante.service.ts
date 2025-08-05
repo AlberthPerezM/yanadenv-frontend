@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { map, Observable, of, catchError, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, catchError, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+
 import { Participante } from '../models/participante';
 import { BACKEND_URL } from '../../config/config';
 
@@ -11,52 +12,52 @@ import { BACKEND_URL } from '../../config/config';
 })
 export class ParticipanteService {
 
-  private urlEndPoint: string = BACKEND_URL + '/api/participantes';
+  private urlEndPoint: string = `${BACKEND_URL}/api/participantes`;
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+
   constructor(private http: HttpClient, private router: Router) { }
 
-  // Listar participantes
+  /** Obtener todos los participantes */
   getParticipantes(): Observable<Participante[]> {
-    return this.http.get<Participante[]>(this.urlEndPoint).pipe(
-      map(response => response as Participante[])
-    );
+    return this.http.get<Participante[]>(this.urlEndPoint);
   }
 
-  // Crear un participante
-  create(participante: Participante): Observable<any> {
-    return this.http.post<Participante>(this.urlEndPoint, participante, { headers: this.httpHeaders }).pipe(
-      catchError(e => {
-        console.error(e.error.mensaje);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
-        return throwError(e);
-      })
-    );
-  }
-
-  // Método para obtener un participante por ID
+  /** Obtener un participante por su ID */
   getParticipante(id: number): Observable<Participante> {
     return this.http.get<Participante>(`${this.urlEndPoint}/${id}`);
   }
 
-
-  // Actualizar un participante
-  update(participante: Participante): Observable<any> {
-    return this.http.put<any>(`${this.urlEndPoint}/${participante.idPar}`, participante, { headers: this.httpHeaders });
+  /** Crear un nuevo participante */
+  create(participante: Participante): Observable<Participante> {
+    return this.http.post<Participante>(this.urlEndPoint, participante, { headers: this.httpHeaders })
+      .pipe(catchError(this.handleError));
   }
 
-  //Metodo para contar participante
+  /** Actualizar un participante existente */
+  update(participante: Participante): Observable<any> {
+    return this.http.put<any>(`${this.urlEndPoint}/${participante.idPar}`, participante, { headers: this.httpHeaders })
+      .pipe(catchError(this.handleError));
+  }
+
+  /** Eliminar un participante por ID */
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.urlEndPoint}/${id}`, { headers: this.httpHeaders })
+      .pipe(catchError(this.handleError));
+  }
+
+  /** Obtener el total de participantes */
   countParticipantes(): Observable<number> {
     return this.http.get<number>(`${this.urlEndPoint}/count`);
   }
 
-  // Eliminar un participante
-  delete(id: number): Observable<Participante> {
-    return this.http.delete<Participante>(`${this.urlEndPoint}/${id}`, { headers: this.httpHeaders }).pipe(
-      catchError(e => {
-        console.error(e.error.mensaje);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
-        return throwError(e);
-      })
+  /** Manejo centralizado de errores */
+  private handleError(error: any): Observable<never> {
+    console.error(error.error?.mensaje || 'Error desconocido');
+    Swal.fire(
+      error.error?.mensaje || 'Error en la operación',
+      error.error?.error || 'Ocurrió un error inesperado',
+      'error'
     );
+    return throwError(() => error);
   }
 }

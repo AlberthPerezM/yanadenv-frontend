@@ -22,6 +22,7 @@
         <label for="fechaInicioSintomas" class="form-label">
           Id participante<span class="text-danger">*</span>
         </label>
+        <input *ngIf="datoclinico" type="text" class="form-control" [value]="idParticipante" readonly>
 
         <div class="col-md-6 mb-3">
           <label for="fechaInicioSintomas" class="form-label">
@@ -387,9 +388,7 @@
 
         <!-- Botones -->
         <div class="col-12 d-flex justify-content-end mt-4 gap-2">
-          <button type="button" (click)="router.navigate(['/datoclinicos'])" class="btn btn-outline-secondary">
-            <i class="bi bi-x-circle me-2"></i>Cancelar
-          </button>
+
 
           <button type="button" (click)="create()" *ngIf="!datoclinico.idDat; else elseBlock" class="btn btn-success">
             <i class="bi bi-save me-2"></i>Guardar
