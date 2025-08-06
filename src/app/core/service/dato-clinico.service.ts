@@ -32,12 +32,10 @@ export class DatoClinicoService {
       );
   }
 
-  // Crear nuevo dato clínico asociado a un participante
-  create(datoClinico: DatoClinico, idPar: number): Observable<DatoClinico> {
-    const url = `${this.urlEndPoint}/participante/${idPar}`;
-    return this.http.post<DatoClinico>(url, datoClinico, {
-      headers: this.getJsonHeaders()
-    }).pipe(
+  // Crear un DatoClinico asociado a un participante
+
+  create(idPar: number, dato: DatoClinico): Observable<DatoClinico> {
+    return this.http.post<DatoClinico>(`${this.urlEndPoint}/participante/${idPar}`, dato).pipe(
       catchError((e) => {
         console.error('Error al crear dato clínico:', e);
         const mensaje = e.error?.mensaje || 'No se pudo crear el dato clínico';
@@ -46,6 +44,7 @@ export class DatoClinicoService {
       })
     );
   }
+
 
   // Obtener dato clínico por ID
   getDatoClinico(id: number): Observable<DatoClinico> {
@@ -94,7 +93,10 @@ export class DatoClinicoService {
         })
       );
   }
-
+  // Obtener el dato clínico por ID del participante
+  getByParticipanteId(idPar: number): Observable<DatoClinico> {
+    return this.http.get<DatoClinico>(`${this.urlEndPoint}/participante/${idPar}`);
+  }
   // Contador de datos clínicos
   countDatosClinicos(): Observable<number> {
     return this.http.get<number>(`${this.urlEndPoint}/count`).pipe(

@@ -13,8 +13,6 @@ import { Apoderado } from '../models/apoderado';
 })
 export class ApoderadoService {
 
-  //private urlEndPoint: string = 'http://localhost:8080/api/apoderados';
-  //BACKEND_URL + '/login';
   private urlEndPoint: string = BACKEND_URL + '/api/apoderados';
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -23,7 +21,7 @@ export class ApoderadoService {
 
   // Listar participantes
   getParticipantes(): Observable<Participante[]> {
-      return this.http.get<Participante[]>(this.urlEndPoint + '/participantes');
+    return this.http.get<Participante[]>(this.urlEndPoint + '/participantes');
   }
 
   // Método para listar datos

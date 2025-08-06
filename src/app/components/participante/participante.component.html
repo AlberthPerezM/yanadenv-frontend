@@ -43,8 +43,7 @@
               <button type="button" [routerLink]="['/examenes/form', participante.idPar]" class="btn btn-sm btn-info">
                 <i class="fas fa-vial"></i> Examenes
               </button>
-              <button *ngIf="participante.datosClinicos.length > 0"
-                [routerLink]="['/datoclinicos/form', participante.idPar, participante.datosClinicos[0].idDat]"
+              <button [routerLink]="['/datoclinicos/form/participante', participante.idPar]"
                 class="btn btn-sm btn-warning">
                 <i class="fas fa-stethoscope"></i> Editar Dato Clínico
               </button>

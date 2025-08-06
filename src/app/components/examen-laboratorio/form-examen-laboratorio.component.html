@@ -82,7 +82,7 @@
 
         <button type="button" class="btn mx-2 text-white"
           [ngStyle]="{ 'background-color': '#090977', 'border': 'none' }" (click)="guardarExamenes()"
-          [disabled]="!participante?.idPar || examenes.length === 0">
+          [disabled]="!participante.idPar || examenes.length === 0">
           Guardar Exámenes
         </button>
       </div>

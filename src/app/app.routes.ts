@@ -21,6 +21,8 @@ import { Forbidden403Component } from './components/forbidden403/forbidden403.co
 import { DashboardComponent } from './shared/components/dashboard/dashboard.component';
 import { authGuard } from './core/guards/auth.guard';
 import { LocalizacionSelectorComponent } from './components/selector-localizacion/selector-localizacion.component';
+import { CampaniaComponent } from './components/campania/campania.component';
+import { FormCampaniaComponent } from './components/campania/form-campania/form-campania.component';
 
 export const routes: Routes = [
 
@@ -56,9 +58,15 @@ export const routes: Routes = [
       { path: 'examenes/form/:idPar', component: FormExamenLaboratorioComponent },
 
       // Datos clínicos
+      // Datos clínicos
       { path: 'datoclinicos', component: DatoClinicoComponent },
-      { path: 'datoclinicos/form', component: FormDatoClinicoComponent },
-      { path: 'datoclinicos/form/:idPar', component: FormDatoClinicoComponent },
+
+      // Registrar nuevo dato clínico para participante
+      { path: 'datoclinicos/form/participante/:idPar', component: FormDatoClinicoComponent },
+
+      // Editar dato clínico
+      { path: 'datoclinicos/form/edit/:idDat', component: FormDatoClinicoComponent },
+
 
       // Usuarios
       { path: 'users', component: UserComponent },
@@ -69,12 +77,16 @@ export const routes: Routes = [
       //Localización
       { path: 'localizaciones', component: LocalizacionSelectorComponent },
       { path: 'datoclinicos/form/:idDat', component: FormDatoClinicoComponent },
-      { path: 'datoclinicos/form/edit/:idDat', component: FormDatoClinicoComponent },
-      { path: 'datoclinicos/form/:idPar/:idDat', component: FormDatoClinicoComponent }
+      { path: 'datoclinicos/form/participante/:idPar', component: FormDatoClinicoComponent },
+
+      // Campañas
+      { path: 'campanias', component: CampaniaComponent },
+      { path: 'campanias/form', component: FormCampaniaComponent },
+      { path: 'campanias/form/:idCam', component: FormCampaniaComponent },
 
     ]
   },
 
   // RUTA COMODÍN
-  { path: '**', redirectTo: 'dashboard' }
+  { path: '**', redirectTo: 'forbidden' }
 ];

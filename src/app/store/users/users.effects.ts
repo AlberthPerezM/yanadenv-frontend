@@ -106,7 +106,7 @@ export class UsersEffects {
             });
         })
     ), { dispatch: false });
-    
+
     updateSuccessUser$ = createEffect(() => this.actions$.pipe(
         ofType(updateSuccess),
         tap(() => {
@@ -124,7 +124,7 @@ export class UsersEffects {
         ofType(removeSuccess),
         tap(() => {
             // No es necesario navegar aquí si la tabla se actualiza en tiempo real
-            this.router.navigate(['/users']); 
+            this.router.navigate(['/users']);
 
             Swal.fire({
                 title: "Eliminado!",
@@ -135,5 +135,5 @@ export class UsersEffects {
     ), { dispatch: false });
 
     // El constructor ahora puede estar vacío o ser eliminado.
-    constructor() {}
+    constructor() { }
 }

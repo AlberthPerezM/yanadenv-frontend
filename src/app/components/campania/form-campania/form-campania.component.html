@@ -1,0 +1,54 @@
+<div class="card border-0 shadow-lg">
+    <div class="card-header bg-primary text-white fw-bold text-center">
+        {{ titulo }}
+    </div>
+
+    <div class="card-body">
+        <!-- Selector de Localización -->
+        <app-selector-localizacion [centroInicial]="centroIdSeleccionado"
+            (centroSeleccionado)="onCentroSeleccionado($event)">
+        </app-selector-localizacion>
+
+
+        <!-- Formulario de campaña -->
+        <form (ngSubmit)="onSubmit()" #form="ngForm" class="mt-4">
+
+            <div class="form-group mb-3">
+                <label for="nombre">Nombre de Campaña:</label>
+                <input type="text" id="nombre" class="form-control" [(ngModel)]="campania.nombreCam" name="nombreCam"
+                    required>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" class="form-control" [(ngModel)]="campania.descripcionCam"
+                    name="descripcionCam" rows="3"></textarea>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="fechaInicio">Fecha de Inicio:</label>
+                <input type="date" id="fechaInicio" class="form-control" [(ngModel)]="campania.fechaInicio"
+                    name="fechaInicio" required>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="fechaFin">Fecha de Fin:</label>
+                <input type="date" id="fechaFin" class="form-control" [(ngModel)]="campania.fechaFin" name="fechaFin">
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="habilitado">¿Campaña habilitada?</label>
+                <select class="form-select" id="habilitado" [(ngModel)]="campania.habilitadoCam" name="habilitadoCam"
+                    required>
+                    <option [ngValue]="true">Sí</option>
+                    <option [ngValue]="false">No</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success mt-4">
+                {{ campania.idCam ? 'Actualizar' : 'Guardar' }}
+            </button>
+
+        </form>
+    </div>
+</div>

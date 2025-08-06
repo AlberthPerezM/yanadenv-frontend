@@ -12,45 +12,45 @@ export class AuthEffects {
   private actions$ = inject(Actions);
   private service = inject(AuthService);
   private router = inject(Router);
-// En AuthEffects
-login$ = createEffect(() => this.actions$.pipe(
-  ofType(login),
-  exhaustMap(action => this.service.loginUser({
-    username: action.username,
-    password: action.password
-  }).pipe(
-    map(response => {
-      const token = response.token;
-      const payload = this.service.getPayload(token);
-      this.service.token = token; // Asegurar que el token se guarde
-      return loginSuccess({
-        login: {
-          user: { username: payload.sub },
-          isAuth: true,
-          isAdmin: payload.isAdmin,
-          token: token
-        }
-      });
-    }),
-    catchError(error => {
-      const errorMessage = error.error?.message || 'Error de autenticación';
-      return of(loginError({ error: errorMessage }));
-    })
-  ))
-));
+  // En AuthEffects
+  login$ = createEffect(() => this.actions$.pipe(
+    ofType(login),
+    exhaustMap(action => this.service.loginUser({
+      username: action.username,
+      password: action.password
+    }).pipe(
+      map(response => {
+        const token = response.token;
+        const payload = this.service.getPayload(token);
+        this.service.token = token; // Asegurar que el token se guarde
+        return loginSuccess({
+          login: {
+            user: { username: payload.sub },
+            isAuth: true,
+            isAdmin: payload.isAdmin,
+            token: token
+          }
+        });
+      }),
+      catchError(error => {
+        const errorMessage = error.error?.message || 'Error de autenticación';
+        return of(loginError({ error: errorMessage }));
+      })
+    ))
+  ));
 
   loginSuccess$ = createEffect(() => this.actions$.pipe(
     ofType(loginSuccess),
     tap(() => {
-        // Muestra un mensaje de bienvenida y redirige
-        Swal.fire({
-            icon: 'success',
-            title: 'Login Exitoso',
-            text: '¡Bienvenido de vuelta!',
-            timer: 1500,
-            showConfirmButton: false
-        });
-        this.router.navigate(['/users']);
+      // Muestra un mensaje de bienvenida y redirige
+      Swal.fire({
+        icon: 'success',
+        title: 'Login Exitoso',
+        text: '¡Bienvenido de vuelta!',
+        timer: 1500,
+        showConfirmButton: false
+      });
+      this.router.navigate(['/dashboard']);
     })
   ), { dispatch: false });
 
@@ -60,5 +60,5 @@ login$ = createEffect(() => this.actions$.pipe(
   ), { dispatch: false });
 
   // El constructor ya no es necesario para la inyección de dependencias
-  constructor() {}
+  constructor() { }
 }

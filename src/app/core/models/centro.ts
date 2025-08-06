@@ -1,3 +1,4 @@
+import { Campania } from "./campania";
 import { Distrito } from "./distrito";
 
 export class Centro {
@@ -9,5 +10,6 @@ export class Centro {
   nivel!: number;
   nombreCent!: string;
   distrito!: Distrito;
+  campanias?: Campania[];
 }
 

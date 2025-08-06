@@ -13,6 +13,6 @@ export class Participante {
     gestante?: string;
     edadGestacional?: number;
     examenesLaboratorio?: ExamenLaboratorio[] = [];
-    datosClinicos: DatoClinico[] = []; // ✅ agregar esta línea
+    datoClinico?: DatoClinico;
 
 }

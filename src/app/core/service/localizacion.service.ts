@@ -17,9 +17,9 @@ export class LocalizacionService {
 
   private urlEndPoint = `${BACKEND_URL}/api`;
 
-  private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'});
+  private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   getRegiones(): Observable<Region[]> {
     return this.http.get<Region[]>(`${this.urlEndPoint}/regiones`).pipe(
@@ -53,7 +53,7 @@ export class LocalizacionService {
       })
     );
   }
- getCentrosPorDistrito(idDist: number): Observable<Centro[]> {
+  getCentrosPorDistrito(idDist: number): Observable<Centro[]> {
     return this.http.get<Centro[]>(`${this.urlEndPoint}/distritos/${idDist}/centros`).pipe(
       map(response => response as Centro[]),
       catchError(e => {
@@ -62,5 +62,19 @@ export class LocalizacionService {
         return throwError(() => e);
       })
     );
+  }
+
+  getJerarquiaPorCentro(idCentro: number): Observable<{
+    idRegion: number;
+    idProvincia: number;
+    idDistrito: number;
+    idCentro: number;
+  }> {
+    return this.http.get<{
+      idRegion: number;
+      idProvincia: number;
+      idDistrito: number;
+      idCentro: number;
+    }>(`${BACKEND_URL}/centros/${idCentro}/jerarquia`);
   }
 }

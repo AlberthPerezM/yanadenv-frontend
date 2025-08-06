@@ -1,0 +1,70 @@
+<div class="card border-0 shadow-lg">
+    <div class="card-header card-header-azul fw-bold text-center">
+        {{ titulo }}
+    </div>
+
+    <ul class="nav nav-tabs mb-4 justify-content-center border-bottom">
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Lista de Campañas</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/campanias/form']">Registrar Nueva Campaña</a>
+        </li>
+    </ul>
+
+    <div class="card-body">
+        <div class="tabular-wrapper">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="main-title">Listado de Campañas</h5>
+                <button [routerLink]="['/campanias/form']" class="btn btn-success">
+                    <i class="fas fa-plus me-2"></i> Crear campaña
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="custom-table">
+                    <thead class="color-azul">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Inicio</th>
+                            <th>Fin</th>
+                            <th>Centro</th>
+                            <th>Habilitado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let campania of campanias">
+                            <td>{{ campania.nombreCam }}</td>
+                            <td>{{ campania.descripcionCam || '-' }}</td>
+                            <td>{{ campania.fechaInicio | date: 'dd/MM/yyyy' }}</td>
+                            <td>{{ campania.fechaFin ? (campania.fechaFin | date: 'dd/MM/yyyy') : '-' }}</td>
+
+                            <td>
+                                <span
+                                    [ngClass]="{ 'text-success': campania.habilitadoCam, 'text-danger': !campania.habilitadoCam }">
+                                    {{ campania.habilitadoCam ? 'Sí' : 'No' }}
+                                </span>
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-center gap-2 flex-wrap">
+                                    <button [routerLink]="['/campanias/form', campania.idCam]"
+                                        class="btn btn-sm btn-primary">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </button>
+                                    <button (click)="delete(campania)" class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash-alt"></i> Eliminar
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr *ngIf="campanias.length === 0">
+                            <td colspan="7" class="text-center">No hay campañas registradas.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

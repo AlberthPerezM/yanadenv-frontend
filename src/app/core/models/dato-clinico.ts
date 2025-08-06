@@ -40,6 +40,6 @@ export class DatoClinico {
   glasgowAperturaOcular?: number;
   glasgowAperturaMotora?: number;
   glasgowAperturaVerbal?: number;
-
+  participante?: Participante;
 
 }

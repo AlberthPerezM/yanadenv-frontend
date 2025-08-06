@@ -35,12 +35,13 @@
 
     <!-- Datos clínicos -->
     <li class="nav-item">
-      <a class="nav-link" [routerLink]="['/datoclinicos/form', participante.idPar]" routerLinkActive="active"
-        #rlaDatosClinicos="routerLinkActive" [class.disabled]="rlaDatosClinicos.isActive"
+      <a class="nav-link" [routerLink]="['/datoclinicos/form/participante', participante.idPar]"
+        routerLinkActive="active" #rlaDatosClinicos="routerLinkActive" [class.disabled]="rlaDatosClinicos.isActive"
         (click)="rlaDatosClinicos.isActive && $event.preventDefault()">
         Datos clínicos
       </a>
     </li>
+
   </ul>
 
 

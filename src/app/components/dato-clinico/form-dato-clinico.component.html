@@ -14,15 +14,6 @@
               class="text-danger">*</span>) para registrar el dato clínico.
           </div>
         </div>
-        <label for="fechaInicioSintomas" class="form-label">
-          Id datos clincios<span class="text-danger">*</span>
-        </label>
-        <input *ngIf="datoclinico" type="text" class="form-control" [value]="datoclinico.idDat" readonly>
-
-        <label for="fechaInicioSintomas" class="form-label">
-          Id participante<span class="text-danger">*</span>
-        </label>
-        <input *ngIf="datoclinico" type="text" class="form-control" [value]="idParticipante" readonly>
 
         <div class="col-md-6 mb-3">
           <label for="fechaInicioSintomas" class="form-label">
@@ -390,15 +381,8 @@
         <div class="col-12 d-flex justify-content-end mt-4 gap-2">
 
 
-          <button type="button" (click)="create()" *ngIf="!datoclinico.idDat; else elseBlock" class="btn btn-success">
-            <i class="bi bi-save me-2"></i>Guardar
-          </button>
+          <button class="btn btn-primary" (click)="guardar()">Guardar</button>
 
-          <ng-template #elseBlock>
-            <button type="button" (click)="update()" class="btn btn-primary">
-              <i class="bi bi-pencil-square me-2"></i>Actualizar
-            </button>
-          </ng-template>
         </div>
       </form>
     </div>

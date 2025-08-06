@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { DatoClinico } from '../../core/models/dato-clinico';
 import { DatoClinicoService } from '../../core/service/dato-clinico.service';
@@ -19,56 +19,72 @@ export class FormDatoClinicoComponent implements OnInit {
   titulo = 'Datos clínicos';
   idParticipante: number | null = null;
 
-  // Mostrar campos condicionales para "otros síntomas"
   showOtroSintoma2 = false;
   showOtroSintoma3 = false;
   showOtroSintoma4 = false;
 
   constructor(
-    private datoclinicoService: DatoClinicoService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
+    private readonly datoclinicoService: DatoClinicoService,
+    private readonly router: Router,
+    private readonly activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(({ idPar, idDat }) => {
-      this.idParticipante = idPar ? +idPar : null;
-
-      if (idDat) {
-        this.titulo = 'Editar dato clínico';
-        this.cargarDatoClinico(+idDat);
-      } else {
-        this.titulo = 'Registrar dato clínico';
-      }
-    });
+    this.activatedRoute.params.subscribe(this.procesarParametros);
   }
 
-  create(): void {
-    if (!this.validarFormulario() || !this.idParticipante) {
-      if (!this.idParticipante) {
-        this.mostrarAlerta('Error', 'No se recibió el ID del participante', 'error');
-      }
-      return;
+  private procesarParametros = (params: Params): void => {
+    this.idParticipante = params['idPar'] ? +params['idPar'] : null;
+
+    if (params['idDat']) {
+      this.titulo = 'Editar dato clínico';
+      this.cargarDatoClinico(+params['idDat']);
+    } else if (this.idParticipante) {
+      // Buscar si el participante ya tiene un dato clínico
+      this.datoclinicoService.getByParticipanteId(this.idParticipante).subscribe({
+        next: dato => {
+          this.datoclinico = dato;
+          this.titulo = 'Editar dato clínico';
+          this.showOtroSintoma2 = !!dato.otrosSintomas2;
+          this.showOtroSintoma3 = !!dato.otrosSintomas3;
+          this.showOtroSintoma4 = !!dato.otrosSintomas4;
+        },
+        error: err => {
+          if (err.status === 404) {
+            this.titulo = 'Registrar dato clínico';
+            this.datoclinico = new DatoClinico();
+          } else {
+            this.mostrarAlerta('Error', 'No se pudo cargar el dato clínico', 'error');
+          }
+        }
+      });
     }
-
-    this.datoclinicoService.create(this.datoclinico, this.idParticipante).subscribe({
-      next: () => this.finalizarAccion('Dato clínico registrado con éxito'),
-      error: () => this.mostrarAlerta('Error', 'No se pudo registrar el dato clínico', 'error')
-    });
   }
 
-  update(): void {
+  guardar(): void {
     if (!this.validarFormulario()) return;
 
-    this.datoclinicoService.update(this.datoclinico).subscribe({
-      next: () => this.finalizarAccion('Dato clínico actualizado con éxito'),
-      error: () => this.mostrarAlerta('Error', 'No se pudo actualizar el dato clínico', 'error')
+    const request$ = this.datoclinico.idDat
+      ? this.datoclinicoService.update(this.datoclinico)
+      : this.datoclinicoService.create(this.idParticipante!, this.datoclinico);
+
+    request$.subscribe({
+      next: () => this.finalizarAccion(
+        this.datoclinico.idDat ? 'Dato clínico actualizado con éxito' : 'Dato clínico registrado con éxito'
+      ),
+      error: () => this.mostrarAlerta(
+        'Error',
+        this.datoclinico.idDat
+          ? 'No se pudo actualizar el dato clínico'
+          : 'No se pudo registrar el dato clínico',
+        'error'
+      )
     });
   }
 
   private cargarDatoClinico(idDat: number): void {
     this.datoclinicoService.getDatoClinico(idDat).subscribe({
-      next: dato => {
+      next: (dato) => {
         this.datoclinico = dato;
         this.showOtroSintoma2 = !!dato.otrosSintomas2;
         this.showOtroSintoma3 = !!dato.otrosSintomas3;
@@ -83,21 +99,20 @@ export class FormDatoClinicoComponent implements OnInit {
 
   private validarFormulario(): boolean {
     if (!this.datoclinico.fechaInicioSintomas) {
-      this.mostrarAlerta('Validación', 'La fecha de inicio de síntomas es requerida', 'warning');
-      return false;
+      return this.alertarValidacion('La fecha de inicio de síntomas es requerida');
     }
-
     if (this.datoclinico.compromisoOrganos && !this.datoclinico.tipoCompromisoOrganos) {
-      this.mostrarAlerta('Validación', 'Debe especificar el tipo de compromiso de órganos', 'warning');
-      return false;
+      return this.alertarValidacion('Debe especificar el tipo de compromiso de órganos');
     }
-
     if (this.datoclinico.sangradoGrave && !this.datoclinico.tipoSangrado) {
-      this.mostrarAlerta('Validación', 'Debe especificar el tipo de sangrado', 'warning');
-      return false;
+      return this.alertarValidacion('Debe especificar el tipo de sangrado');
     }
-
     return true;
+  }
+
+  private alertarValidacion(mensaje: string): boolean {
+    this.mostrarAlerta('Validación', mensaje, 'warning');
+    return false;
   }
 
   private finalizarAccion(mensaje: string): void {
@@ -105,11 +120,15 @@ export class FormDatoClinicoComponent implements OnInit {
     this.router.navigate(['/datoclinicos']);
   }
 
-  private mostrarAlerta(titulo: string, mensaje: string, tipo: 'success' | 'error' | 'warning'): void {
+  private mostrarAlerta(
+    titulo: string,
+    mensaje: string,
+    tipo: 'success' | 'error' | 'warning'
+  ): void {
     Swal.fire(titulo, mensaje, tipo);
   }
 
-  // Métodos para manejar limpieza de campos condicionales
+  // Métodos para campos condicionales
   onFiebreChange(): void {
     if (!this.datoclinico.fiebre) {
       this.datoclinico.temperatura = undefined;
@@ -128,7 +147,7 @@ export class FormDatoClinicoComponent implements OnInit {
     }
   }
 
-  // Añadir campos adicionales para "otros síntomas"
+  // Lógica para agregar campos dinámicos "otros síntomas"
   addOtroSintoma(): void {
     if (!this.showOtroSintoma2) {
       this.showOtroSintoma2 = true;
