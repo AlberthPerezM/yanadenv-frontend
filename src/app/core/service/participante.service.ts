@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 
 import { Participante } from '../models/participante';
 import { BACKEND_URL } from '../../config/config';
+import { Campania } from '../models/campania';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,12 @@ export class ParticipanteService {
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient, private router: Router) { }
+  // Listar campañas
+  getCampanias(): Observable<Campania[]> {
+    return this.http.get(this.urlEndPoint + '/campanias').pipe(
+      map(response => response as Campania[])
+    );
+  }
 
   /** Obtener todos los participantes */
   getParticipantes(): Observable<Participante[]> {

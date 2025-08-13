@@ -1,3 +1,4 @@
+import { Campania } from "./campania";
 import { DatoClinico } from "./dato-clinico";
 import { ExamenLaboratorio } from "./examen-laboratorio";
 
@@ -14,5 +15,6 @@ export class Participante {
     edadGestacional?: number;
     examenesLaboratorio?: ExamenLaboratorio[] = [];
     datoClinico?: DatoClinico;
+    campania?: Campania;
 
 }

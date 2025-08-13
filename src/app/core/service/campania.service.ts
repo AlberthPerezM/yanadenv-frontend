@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { Campania } from '../models/campania';
 import Swal from 'sweetalert2';
 import { BACKEND_URL } from '../../config/config';
@@ -21,6 +21,8 @@ export class CampaniaService {
   getAll(): Observable<Campania[]> {
     return this.http.get<Campania[]>(this.urlEndPoint);
   }
+  // Listar campañas
+
 
   // Obtener campaña por ID
   getById(id: number): Observable<Campania> {

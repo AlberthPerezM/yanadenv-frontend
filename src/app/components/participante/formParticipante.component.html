@@ -97,10 +97,20 @@
         </select>
       </div>
 
-      <div class="col-md-6" *ngIf="participante.sexo === 'F' && participante.gestante === 'Sí'">
-        <label class="form-label">Edad gestacional (semanas)</label>
-        <input type="number" class="form-control" [(ngModel)]="participante.edadGestacional" name="edadGestacional">
+      <!-- ...tu código anterior... -->
+      <div class="form-group row">
+        <label for="campania" class="col-form-label col-sm-2">Campaña</label>
+        <div class="col-sm-6">
+          <select [compareWith]="compareCampania" class="form-control" [(ngModel)]="participante.campania"
+            name="campania" style="width: 300px;">
+            <option [ngValue]="undefined">-- Seleccione una campaña --</option>
+            <option *ngFor="let campania of campanias" [ngValue]="campania">
+              {{ campania.nombreCam }}
+            </option>
+          </select>
+        </div>
       </div>
+      <!-- quita la 'S' que está sola debajo -->
 
       <div class="col-12 d-flex justify-content-center mt-5">
         <button type="button" class="btn mx-2 text-white"

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Participante } from '../models/participante';
 import { BACKEND_URL } from '../../config/config';
 import { Apoderado } from '../models/apoderado';
+import { Campania } from '../models/campania';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,15 @@ export class ApoderadoService {
   // Listar participantes
   getParticipantes(): Observable<Participante[]> {
     return this.http.get<Participante[]>(this.urlEndPoint + '/participantes');
+  }
+
+
+  //Listar campañas
+  // Listar campañas
+  getCampanias(): Observable<Campania[]> {
+    return this.http.get(this.urlEndPoint + '/participantes/campanias').pipe(
+      map(response => response as Campania[])
+    );
   }
 
   // Método para listar datos
@@ -71,4 +81,15 @@ export class ApoderadoService {
       })
     );
   }
+
+  compareCampania(c1: Campania, c2: Campania): boolean {
+    if (c1 === undefined && c2 === undefined) {
+      return true;
+    }
+
+    return c1 === null || c2 === null || c1 === undefined || c2 === undefined
+      ? false
+      : c1.idCam === c2.idCam;
+  }
+
 }

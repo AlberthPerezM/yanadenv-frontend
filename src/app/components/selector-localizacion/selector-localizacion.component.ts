@@ -32,9 +32,10 @@ export class LocalizacionSelectorComponent implements OnInit, OnChanges {
   constructor(private localizacionService: LocalizacionService) { }
 
   ngOnInit(): void {
+    console.log('📍 ngOnInit - centroInicial:', this.centroInicial);
     this.cargarRegiones(() => {
       if (this.centroInicial) {
-        console.log('🟢 Precargando desde ngOnInit con centroInicial:', this.centroInicial);
+        console.log('⚙️ Precargando jerarquía desde ngOnInit...');
         this.precargarJerarquiaDesdeCentro(this.centroInicial);
       }
     });
@@ -43,8 +44,8 @@ export class LocalizacionSelectorComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['centroInicial'] && changes['centroInicial'].currentValue) {
       const nuevoCentroId = changes['centroInicial'].currentValue;
+      console.log('🔄 Precargando desde ngOnChanges con nuevo centroInicial:', nuevoCentroId);
       this.cargarRegiones(() => {
-        console.log('🔄 Precargando desde ngOnChanges con nuevo centroInicial:', nuevoCentroId);
         this.precargarJerarquiaDesdeCentro(nuevoCentroId);
       });
     }
@@ -87,15 +88,19 @@ export class LocalizacionSelectorComponent implements OnInit, OnChanges {
     }
   }
 
-
   onCentroChange(): void {
     console.log("📤 Emitiendo centro desde hijo:", this.selectedCentroId);
-    this.centroSeleccionado.emit(this.selectedCentroId);
+    if (this.selectedCentroId != null) {
+      this.centroSeleccionado.emit(this.selectedCentroId);
+    }
   }
 
   precargarJerarquiaDesdeCentro(idCentro: number): void {
     this.localizacionService.getJerarquiaPorCentro(idCentro).subscribe(data => {
+      console.log('📦 Jerarquía recibida:', data);
+
       this.selectedRegionId = data.idRegion;
+
       this.localizacionService.getProvinciasPorRegion(data.idRegion).subscribe(provincias => {
         this.provincias = provincias;
         this.selectedProvinciaId = data.idProvincia;
@@ -108,11 +113,11 @@ export class LocalizacionSelectorComponent implements OnInit, OnChanges {
             this.centros = centros;
             this.selectedCentroId = data.idCentro;
 
-            this.centroSeleccionado.emit(data.idCentro); // 🔥 MUY IMPORTANTE
+            console.log("📤 Emitiendo centro precargado:", this.selectedCentroId);
+            this.centroSeleccionado.emit(this.selectedCentroId);
           });
         });
       });
     });
   }
-
 }

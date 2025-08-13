@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 import { Participante } from '../../core/models/participante';
 import { ParticipanteService } from '../../core/service/participante.service';
 import { ApoderadoService } from '../../core/service/apoderado.service';
+import { Campania } from '../../core/models/campania';
+import { CampaniaService } from '../../core/service/campania.service';
 
 @Component({
   selector: 'app-form-participante',
@@ -19,18 +21,21 @@ export class FormParticipanteComponent implements OnInit {
 
   public participante: Participante = new Participante();
   public titulo: string = 'Participante';
+  public campanias: Campania[] = [];
 
   public apoderadoExistenteId: number | null = null;
 
   constructor(
     private participanteService: ParticipanteService,
     private apoderadoService: ApoderadoService,
+    private campaniaService: CampaniaService,        // <-- inyecta
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
     this.cargarParticipanteSiExiste();
+    this.cargarCampanias();
   }
 
   // Cargar datos del participante si viene con ID
@@ -101,5 +106,19 @@ export class FormParticipanteComponent implements OnInit {
       this.router.navigate(['/examenes/form', this.participante.idPar]);
     }
   }
+  compareCampania(c1: Campania, c2: Campania): boolean {
+    if (c1 === undefined && c2 === undefined) {
+      return true;
+    }
 
+    return c1 === null || c2 === null || c1 === undefined || c2 === undefined
+      ? false
+      : c1.idCam === c2.idCam;
+  }
+  private cargarCampanias(): void {
+    this.participanteService.getCampanias().subscribe({
+      next: (data) => this.campanias = data,
+      error: (e) => console.error('Error cargando campañas', e)
+    });
+  }
 }
